@@ -122,7 +122,7 @@ variable "vault_enabled" {
   default     = false
 }
 
-variable "public_node_sg_name" {
+variable "sentry_node_sg_name" {
   description = "Name for the public node security group"
   type        = string
   default     = "public-sg"

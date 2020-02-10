@@ -1,6 +1,6 @@
 locals {
-  stuff   = "tihngs"
-  vpc_ids = [module.vpc.vpc_id]
+  vpc_ids       = [module.vpc.vpc_id]
+  public_domain = join(".", [data.aws_region.current.name, var.environment, var.root_domain_name])
 }
 
 data "aws_route53_zone" "this" {

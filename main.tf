@@ -3,10 +3,6 @@ terraform {
   required_version = ">= 0.12"
 }
 
-locals {
-  public_domain = join(".", [data.aws_region.current.name, var.environment, var.root_domain_name])
-}
-
 data "aws_region" "current" {}
 
 module "label" {

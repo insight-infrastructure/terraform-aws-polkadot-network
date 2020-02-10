@@ -53,8 +53,8 @@ No issue is creating limit on this module.
 | namespace | The namespace to deploy into | `string` | `""` | no |
 | network\_name | The network name, ie kusama / mainnet | `string` | `""` | no |
 | owner | n/a | `string` | `""` | no |
-| public\_node\_sg\_name | Name for the public node security group | `string` | `"public-sg"` | no |
 | root\_domain\_name | The public domain | `string` | `""` | no |
+| sentry\_node\_sg\_name | Name for the public node security group | `string` | `"public-sg"` | no |
 | stage | The stage of the deployment | `string` | `""` | no |
 | vault\_enabled | Boolean to allow vault related traffic | `bool` | `false` | no |
 | vault\_sg\_name | Name for the vault security group | `string` | `"bastion-sg"` | no |
@@ -66,9 +66,19 @@ No issue is creating limit on this module.
 | Name | Description |
 |------|-------------|
 | azs | n/a |
+| bastion\_security\_group\_id | #### SGs #### |
+| consul\_security\_group\_id | n/a |
+| hids\_security\_group\_id | n/a |
+| internal\_tld | n/a |
+| logging\_security\_group\_id | n/a |
+| monitoring\_security\_group\_id | n/a |
 | private\_subnets | n/a |
+| public\_regional\_domain | n/a |
 | public\_subnets | n/a |
-| vpc\_id | n/a |
+| root\_domain\_name | #### DNS #### |
+| sentry\_security\_group\_id | n/a |
+| vault\_security\_group\_id | n/a |
+| vpc\_id | #### VPC #### |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 

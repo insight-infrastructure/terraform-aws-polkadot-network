@@ -1,3 +1,52 @@
+#####
+# DNS
+#####
+output "root_domain_name" {
+  value = var.root_domain_name
+}
+
+output "internal_tld" {
+  value = var.internal_tld
+}
+
+output "public_regional_domain" {
+  value = var.create_public_regional_subdomain ? local.public_domain : ""
+}
+
+#####
+# SGs
+#####
+output "bastion_security_group_id" {
+  value = module.bastion_sg.this_security_group_id
+}
+
+output "consul_security_group_id" {
+  value = module.consul_sg.this_security_group_id
+}
+
+output "hids_security_group_id" {
+  value = module.hids_sg.this_security_group_id
+}
+
+output "logging_security_group_id" {
+  value = module.consul_sg.this_security_group_id
+}
+
+output "monitoring_security_group_id" {
+  value = module.monitoring_sg.this_security_group_id
+}
+
+output "sentry_security_group_id" {
+  value = module.sentry_node_sg.this_security_group_id
+}
+
+output "vault_security_group_id" {
+  value = module.vault_sg.this_security_group_id
+}
+
+#####
+# VPC
+#####
 output "vpc_id" {
   value = module.vpc.vpc_id
 }
