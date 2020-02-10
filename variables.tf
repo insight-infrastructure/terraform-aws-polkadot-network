@@ -1,24 +1,28 @@
-#######
+########
 # Label
-#######
+########
 variable "environment" {
-  type    = string
-  default = ""
+  description = "The environment"
+  type        = string
+  default     = ""
 }
 
 variable "namespace" {
-  type    = string
-  default = ""
+  description = "The namespace to deploy into"
+  type        = string
+  default     = ""
 }
 
 variable "stage" {
-  type    = string
-  default = ""
+  description = "The stage of the deployment"
+  type        = string
+  default     = ""
 }
 
 variable "network_name" {
-  type    = string
-  default = ""
+  description = "The network name, ie kusama / mainnet"
+  type        = string
+  default     = ""
 }
 
 variable "owner" {
@@ -26,115 +30,136 @@ variable "owner" {
   default = ""
 }
 
-#####
+######
 # DNS
-#####
+######
 variable "internal_tld" {
-  type    = string
-  default = "internal"
+  description = "The top level domain for the internal DNS"
+  type        = string
+  default     = "internal"
 }
 
 variable "root_domain_name" {
-  type    = string
-  default = ""
+  description = "The public domain"
+  type        = string
+  default     = ""
 }
 
 variable "create_internal_domain" {
-  type    = bool
-  default = false
+  description = "Boolean to create an internal split horizon DNS"
+  type        = bool
+  default     = false
 }
 
 variable "create_public_regional_subdomain" {
-  type    = bool
-  default = false
+  description = "Boolean to create regional subdomain - ie us-east-1.example.com"
+  type        = bool
+  default     = false
 }
 
 variable "zone_id" {
-  type    = string
-  default = ""
+  description = "The zone ID to configure as the root zoon - ie subdomain.example.com's zone ID"
+  type        = string
+  default     = ""
 }
 
-#####
+######
 # VPC
-#####
+######
 variable "vpc_name" {
-  type    = string
-  default = ""
+  description = "The name of the VPC"
+  type        = string
+  default     = ""
 }
 
 variable "azs" {
-  type    = list(string)
-  default = ["us-east-1a", "us-east-1b", "us-east-1c"]
+  description = "List of availability zones"
+  type        = list(string)
+  default     = ["us-east-1a", "us-east-1b", "us-east-1c"]
 }
 
-#################
+##################
 # Security Groups
-#################
+##################
 
 variable "corporate_ip" {
-  type    = string
-  default = ""
+  description = "The corporate IP you want to restrict ssh traffic to"
+  type        = string
+  default     = ""
 }
 
 variable "bastion_enabled" {
-  type    = bool
-  default = false
+  description = "Boolean to enable a bastion host.  All ssh traffic restricted to bastion"
+  type        = bool
+  default     = false
 }
 
 variable "consul_enabled" {
-  type    = bool
-  default = false
+  description = "Boolean to allow consul traffic"
+  type        = bool
+  default     = false
 }
 
 variable "monitoring_enabled" {
-  type    = bool
-  default = false
+  description = "Boolean to for prometheus related traffic"
+  type        = bool
+  default     = false
 }
 
 variable "hids_enabled" {
-  type    = bool
-  default = false
+  description = "Boolean to enable intrusion detection systems traffic"
+  type        = bool
+  default     = false
 }
 variable "logging_enabled" {
-  type    = bool
-  default = false
+  description = "Boolean to allow logging related traffic"
+  type        = bool
+  default     = false
 }
 variable "vault_enabled" {
-  type    = bool
-  default = false
+  description = "Boolean to allow vault related traffic"
+  type        = bool
+  default     = false
 }
 
 variable "public_node_sg_name" {
-  type    = string
-  default = "public-sg"
+  description = "Name for the public node security group"
+  type        = string
+  default     = "public-sg"
 }
 
 variable "bastion_sg_name" {
-  type    = string
-  default = "bastion-sg"
+  description = "Name for the bastion security group"
+  type        = string
+  default     = "bastion-sg"
 }
 
 variable "consul_sg_name" {
-  type    = string
-  default = "consul-sg"
+  description = "Name for the consult security group"
+  type        = string
+  default     = "consul-sg"
 }
 
 variable "monitoring_sg_name" {
-  type    = string
-  default = "monitoring-sg"
+  description = "Name for the monitoring security group"
+  type        = string
+  default     = "monitoring-sg"
 }
 
 variable "hids_sg_name" {
-  type    = string
-  default = "hids-sg"
+  description = "Name for the HIDS security group"
+  type        = string
+  default     = "hids-sg"
 }
 
 variable "logging_sg_name" {
-  type    = string
-  default = "bastion-sg"
+  description = "Name for the logging security group"
+  type        = string
+  default     = "bastion-sg"
 }
 
 variable "vault_sg_name" {
-  type    = string
-  default = "bastion-sg"
+  description = "Name for the vault security group"
+  type        = string
+  default     = "bastion-sg"
 }
