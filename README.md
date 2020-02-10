@@ -65,6 +65,9 @@ No issue is creating limit on this module.
 
 | Name | Description |
 |------|-------------|
+| azs | n/a |
+| private\_subnets | n/a |
+| public\_subnets | n/a |
 | vpc\_id | n/a |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
