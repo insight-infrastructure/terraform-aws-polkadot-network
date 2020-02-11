@@ -1,4 +1,33 @@
 
+locals {
+  //    Logic for AZs is azs variable > az_num variable > max azs for region
+  az_num = chunklist(data.aws_availability_zones.available.names, var.num_azs)[0]
+  az_max = data.aws_availability_zones.available.names
+  azs    = coalescelist(var.azs, local.az_num, local.az_max)
+
+  num_azs = length(local.azs)
+  //  TODO: If making additional subnets, this will change
+  subnet_num   = 2
+  subnet_count = local.subnet_num * local.num_azs
+
+  subnet_bits = ceil(log(local.subnet_count, 2))
+
+  public_subnets = [for subnet_num in range(local.num_azs) : cidrsubnet(
+    var.cidr,
+    local.subnet_bits,
+  subnet_num)]
+
+  private_subnets = [for subnet_num in range(local.num_azs) : cidrsubnet(
+    var.cidr,
+    local.subnet_bits,
+    local.num_azs + subnet_num,
+  )]
+}
+
+data "aws_availability_zones" "available" {
+  state = "available"
+}
+
 module "vpc" {
   source = "github.com/terraform-aws-modules/terraform-aws-vpc.git?ref=v2.15.0"
   name   = var.vpc_name
@@ -12,13 +41,9 @@ module "vpc" {
   enable_dns_hostnames = true
   enable_dns_support   = true
 
-  azs = var.azs
+  azs  = local.azs
+  cidr = var.cidr
 
-  cidr = "10.0.0.0/16"
-
-  //  private_subnets = ["10.0.0.0/20", "10.0.16.0/20", "10.0.32.0/20"]
-  //  public_subnets = ["10.0.192.0/24", "10.0.193.0/24", "10.0.194.0/24"]
-
-  private_subnets = ["10.0.0.0/20", "10.0.16.0/20", "10.0.32.0/20"]
-  public_subnets  = ["10.0.192.0/24", "10.0.193.0/24", "10.0.194.0/24"]
+  public_subnets  = local.public_subnets
+  private_subnets = local.private_subnets
 }

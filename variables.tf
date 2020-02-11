@@ -75,7 +75,19 @@ variable "vpc_name" {
 variable "azs" {
   description = "List of availability zones"
   type        = list(string)
-  default     = ["us-east-1a", "us-east-1b", "us-east-1c"]
+  default     = []
+}
+
+variable "num_azs" {
+  description = "The number of AZs to deploy into"
+  type        = number
+  default     = 0
+}
+
+variable "cidr" {
+  description = "The cidr range for network"
+  type        = string
+  default     = "10.0.0.0/16"
 }
 
 ##################

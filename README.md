@@ -34,9 +34,10 @@ No issue is creating limit on this module.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:-----:|
-| azs | List of availability zones | `list(string)` | <pre>[<br>  "us-east-1a",<br>  "us-east-1b",<br>  "us-east-1c"<br>]</pre> | no |
+| azs | List of availability zones | `list(string)` | `[]` | no |
 | bastion\_enabled | Boolean to enable a bastion host.  All ssh traffic restricted to bastion | `bool` | `false` | no |
 | bastion\_sg\_name | Name for the bastion security group | `string` | `"bastion-sg"` | no |
+| cidr | The cidr range for network | `string` | `"10.0.0.0/16"` | no |
 | consul\_enabled | Boolean to allow consul traffic | `bool` | `false` | no |
 | consul\_sg\_name | Name for the consult security group | `string` | `"consul-sg"` | no |
 | corporate\_ip | The corporate IP you want to restrict ssh traffic to | `string` | `""` | no |
@@ -52,6 +53,7 @@ No issue is creating limit on this module.
 | monitoring\_sg\_name | Name for the monitoring security group | `string` | `"monitoring-sg"` | no |
 | namespace | The namespace to deploy into | `string` | `""` | no |
 | network\_name | The network name, ie kusama / mainnet | `string` | `""` | no |
+| num\_azs | The number of AZs to deploy into | `number` | `0` | no |
 | owner | n/a | `string` | `""` | no |
 | root\_domain\_name | The public domain | `string` | `""` | no |
 | sentry\_node\_sg\_name | Name for the public node security group | `string` | `"public-sg"` | no |
@@ -73,7 +75,9 @@ No issue is creating limit on this module.
 | logging\_security\_group\_id | n/a |
 | monitoring\_security\_group\_id | n/a |
 | private\_subnets | n/a |
+| private\_subnets\_cidr\_blocks | n/a |
 | public\_regional\_domain | n/a |
+| public\_subnet\_cidr\_blocks | n/a |
 | public\_subnets | n/a |
 | root\_domain\_name | #### DNS #### |
 | sentry\_security\_group\_id | n/a |
