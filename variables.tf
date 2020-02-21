@@ -137,7 +137,7 @@ variable "vault_enabled" {
 variable "sentry_node_sg_name" {
   description = "Name for the public node security group"
   type        = string
-  default     = "public-sg"
+  default     = "sentry-sg"
 }
 
 variable "bastion_sg_name" {

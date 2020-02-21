@@ -56,7 +56,7 @@ No issue is creating limit on this module.
 | num\_azs | The number of AZs to deploy into | `number` | `0` | no |
 | owner | n/a | `string` | `""` | no |
 | root\_domain\_name | The public domain | `string` | `""` | no |
-| sentry\_node\_sg\_name | Name for the public node security group | `string` | `"public-sg"` | no |
+| sentry\_node\_sg\_name | Name for the public node security group | `string` | `"sentry-sg"` | no |
 | stage | The stage of the deployment | `string` | `""` | no |
 | vault\_enabled | Boolean to allow vault related traffic | `bool` | `false` | no |
 | vault\_sg\_name | Name for the vault security group | `string` | `"bastion-sg"` | no |
