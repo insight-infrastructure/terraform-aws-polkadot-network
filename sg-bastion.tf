@@ -14,12 +14,12 @@ module "bastion_rules" {
   name        = "bastion"
   description = "All traffic"
 
-  create            = var.bastion_enabled
-  security_group_id = var.bastion_enabled ? module.bastion_sg.this_security_group_id : ""
+  create            = local.bastion_enabled
+  security_group_id = local.bastion_enabled ? module.bastion_sg.this_security_group_id : ""
 
   vpc_id = module.vpc.vpc_id
 
-  ingress_with_cidr_blocks = var.bastion_enabled ? [{
+  ingress_with_cidr_blocks = local.bastion_enabled ? [{
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
@@ -27,7 +27,7 @@ module "bastion_rules" {
     cidr_blocks = var.corporate_ip == "" ? "0.0.0.0/0" : "${var.corporate_ip}/32"
   }] : []
 
-  ingress_with_source_security_group_id = var.monitoring_enabled ? [{
+  ingress_with_source_security_group_id = local.monitoring_enabled ? [{
     from_port                = 9100
     to_port                  = 9100
     protocol                 = "tcp"

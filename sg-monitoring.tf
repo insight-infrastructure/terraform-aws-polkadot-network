@@ -17,7 +17,7 @@ module "monitoring_sg" {
     protocol    = "tcp"
     description = "http ingress"
     cidr_blocks = "0.0.0.0/0" # TODO: Fix this
-    }], var.bastion_enabled ? [] : [{
+    }], local.bastion_enabled ? [] : [{
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
@@ -25,13 +25,13 @@ module "monitoring_sg" {
     cidr_blocks = var.corporate_ip == "" ? "0.0.0.0/0" : "${var.corporate_ip}/32"
   }])
 
-  ingress_with_source_security_group_id = var.bastion_enabled ? [{
+  ingress_with_source_security_group_id = local.bastion_enabled ? [{
     rule                     = "ssh-tcp"
     source_security_group_id = module.bastion_sg.this_security_group_id
   }] : []
 
-  ingress_cidr_blocks = var.consul_enabled ? [module.vpc.vpc_cidr_block] : []
-  ingress_rules       = var.consul_enabled ? ["consul-tcp", "consul-serf-wan-tcp", "consul-serf-wan-udp", "consul-serf-lan-tcp", "consul-serf-lan-udp", "consul-dns-tcp", "consul-dns-udp"] : []
+  ingress_cidr_blocks = local.consul_enabled ? [module.vpc.vpc_cidr_block] : []
+  ingress_rules       = local.consul_enabled ? ["consul-tcp", "consul-serf-wan-tcp", "consul-serf-wan-udp", "consul-serf-lan-tcp", "consul-serf-lan-udp", "consul-dns-tcp", "consul-dns-udp"] : []
 
   egress_with_cidr_blocks = [{
     from_port   = 0

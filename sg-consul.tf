@@ -14,12 +14,12 @@ module "consul_rules" {
   name        = "consul"
   description = "All traffic"
 
-  create            = var.consul_enabled
-  security_group_id = var.consul_enabled ? module.consul_sg.this_security_group_id : ""
+  create            = local.consul_enabled
+  security_group_id = local.consul_enabled ? module.consul_sg.this_security_group_id : ""
 
   vpc_id = module.vpc.vpc_id
 
-  ingress_with_cidr_blocks = var.bastion_enabled ? [{
+  ingress_with_cidr_blocks = local.bastion_enabled ? [{
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
@@ -28,7 +28,7 @@ module "consul_rules" {
   }] : []
 
   ingress_with_source_security_group_id = concat(
-    var.monitoring_enabled ? [{
+    local.monitoring_enabled ? [{
       from_port                = 9100
       to_port                  = 9100
       protocol                 = "tcp"
@@ -40,7 +40,7 @@ module "consul_rules" {
       protocol                 = "tcp"
       description              = "Nordstrom/ssh_exporter"
       source_security_group_id = module.monitoring_sg.this_security_group_id
-      }] : [], var.bastion_enabled ? [{
+      }] : [], local.bastion_enabled ? [{
       rule                     = "ssh-tcp"
       source_security_group_id = module.bastion_sg.this_security_group_id
   }] : [], )

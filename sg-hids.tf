@@ -35,7 +35,7 @@ module "hids_sg" {
 
   //  HIDS has two variants that we use, ossec and wazuh.  Wazuh integrates with elasticsearch so we use that exporter for monitoring
   ingress_with_source_security_group_id = concat(
-    var.monitoring_enabled ? [{
+    local.monitoring_enabled ? [{
       from_port                = 9100
       to_port                  = 9100
       protocol                 = "tcp"
@@ -47,11 +47,11 @@ module "hids_sg" {
       protocol                 = "tcp"
       description              = "elasticsearch_exporter"
       source_security_group_id = module.monitoring_sg.this_security_group_id
-      }] : [], var.bastion_enabled ? [{
+      }] : [], local.bastion_enabled ? [{
       rule                     = "ssh-tcp"
       source_security_group_id = module.bastion_sg.this_security_group_id
   }] : [], )
 
-  ingress_cidr_blocks = var.consul_enabled ? [module.vpc.vpc_cidr_block] : []
-  ingress_rules       = var.consul_enabled ? ["consul-tcp", "consul-serf-wan-tcp", "consul-serf-wan-udp", "consul-serf-lan-tcp", "consul-serf-lan-udp", "consul-dns-tcp", "consul-dns-udp"] : []
+  ingress_cidr_blocks = local.consul_enabled ? [module.vpc.vpc_cidr_block] : []
+  ingress_rules       = local.consul_enabled ? ["consul-tcp", "consul-serf-wan-tcp", "consul-serf-wan-udp", "consul-serf-lan-tcp", "consul-serf-lan-udp", "consul-dns-tcp", "consul-dns-udp"] : []
 }

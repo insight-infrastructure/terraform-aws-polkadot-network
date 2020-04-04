@@ -7,10 +7,10 @@ module "logging_sg" {
   vpc_id = module.vpc.vpc_id
   tags   = merge({ Name : var.logging_sg_name }, module.label.tags)
 
-  ingress_with_source_security_group_id = concat(var.bastion_enabled ? [{
+  ingress_with_source_security_group_id = concat(local.bastion_enabled ? [{
     rule                     = "ssh-tcp"
     source_security_group_id = module.bastion_sg.this_security_group_id
-    }] : [], var.monitoring_enabled ? [{
+    }] : [], local.monitoring_enabled ? [{
     from_port                = 9100
     to_port                  = 9100
     protocol                 = "tcp"
@@ -24,7 +24,7 @@ module "logging_sg" {
     source_security_group_id = module.monitoring_sg.this_security_group_id
   }] : [])
 
-  ingress_with_cidr_blocks = concat(var.bastion_enabled ? [] : [{
+  ingress_with_cidr_blocks = concat(local.bastion_enabled ? [] : [{
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
@@ -38,8 +38,8 @@ module "logging_sg" {
       cidr_blocks = "0.0.0.0/0" # TODO: Fix this
   }])
 
-  ingress_cidr_blocks = var.consul_enabled ? [module.vpc.vpc_cidr_block] : []
-  ingress_rules       = var.consul_enabled ? ["consul-tcp", "consul-serf-wan-tcp", "consul-serf-wan-udp", "consul-serf-lan-tcp", "consul-serf-lan-udp", "consul-dns-tcp", "consul-dns-udp"] : []
+  ingress_cidr_blocks = local.consul_enabled ? [module.vpc.vpc_cidr_block] : []
+  ingress_rules       = local.consul_enabled ? ["consul-tcp", "consul-serf-wan-tcp", "consul-serf-wan-udp", "consul-serf-lan-tcp", "consul-serf-lan-udp", "consul-dns-tcp", "consul-dns-udp"] : []
 
 
   egress_with_cidr_blocks = [{

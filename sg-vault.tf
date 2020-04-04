@@ -24,7 +24,7 @@ module "vault_sg" {
       protocol    = "tcp"
       description = "Security group json rpc traffic"
       cidr_blocks = "0.0.0.0/0"
-    }], var.bastion_enabled ? [] :
+    }], local.bastion_enabled ? [] :
     [{
       from_port   = 22
       to_port     = 22
@@ -33,10 +33,10 @@ module "vault_sg" {
       cidr_blocks = var.corporate_ip == "" ? "0.0.0.0/0" : "${var.corporate_ip}/32"
   }], )
 
-  ingress_with_source_security_group_id = concat(var.bastion_enabled ? [{
+  ingress_with_source_security_group_id = concat(local.bastion_enabled ? [{
     rule                     = "ssh-tcp"
     source_security_group_id = module.bastion_sg.this_security_group_id
-    }] : [], var.monitoring_enabled ? [{
+    }] : [], local.monitoring_enabled ? [{
     from_port                = 9100
     to_port                  = 9100
     protocol                 = "tcp"
@@ -50,8 +50,8 @@ module "vault_sg" {
     source_security_group_id = module.monitoring_sg.this_security_group_id
   }] : [])
 
-  ingress_cidr_blocks = var.consul_enabled ? [module.vpc.vpc_cidr_block] : []
-  ingress_rules       = var.consul_enabled ? ["consul-tcp", "consul-serf-wan-tcp", "consul-serf-wan-udp", "consul-serf-lan-tcp", "consul-serf-lan-udp", "consul-dns-tcp", "consul-dns-udp"] : []
+  ingress_cidr_blocks = local.consul_enabled ? [module.vpc.vpc_cidr_block] : []
+  ingress_rules       = local.consul_enabled ? ["consul-tcp", "consul-serf-wan-tcp", "consul-serf-wan-udp", "consul-serf-lan-tcp", "consul-serf-lan-udp", "consul-dns-tcp", "consul-dns-udp"] : []
 
   egress_with_cidr_blocks = [{
     from_port   = 0

@@ -10,11 +10,11 @@ module "sentry_node_sg" {
     Name : var.sentry_node_sg_name
   }, module.label.tags)
 
-  ingress_with_source_security_group_id = concat(var.bastion_enabled ? [
+  ingress_with_source_security_group_id = concat(local.bastion_enabled ? [
     {
       rule                     = "ssh-tcp"
       source_security_group_id = module.bastion_sg.this_security_group_id
-    }] : [], var.monitoring_enabled ? [
+    }] : [], local.monitoring_enabled ? [
     {
       from_port                = 9100
       to_port                  = 9100
@@ -28,7 +28,7 @@ module "sentry_node_sg" {
       protocol                 = "tcp"
       description              = "Docker Prometheus Metrics under /metrics endpoint"
       source_security_group_id = module.monitoring_sg.this_security_group_id
-    }] : [], var.hids_enabled ? [
+    }] : [], local.hids_enabled ? [
     {
       from_port                = 1514
       to_port                  = 1515
@@ -37,9 +37,9 @@ module "sentry_node_sg" {
       source_security_group_id = module.monitoring_sg.this_security_group_id
   }] : [])
 
-  ingress_cidr_blocks = var.consul_enabled ? [
+  ingress_cidr_blocks = local.consul_enabled ? [
   module.vpc.vpc_cidr_block] : []
-  ingress_rules = var.consul_enabled ? [
+  ingress_rules = local.consul_enabled ? [
     "consul-tcp",
     "consul-serf-wan-tcp",
     "consul-serf-wan-udp",
@@ -78,7 +78,7 @@ module "sentry_node_sg" {
         description = ""
         cidr_blocks = "0.0.0.0/0"
       },
-    ], var.bastion_enabled ? [] :
+    ], local.bastion_enabled ? [] :
     [
       {
         from_port   = 22
