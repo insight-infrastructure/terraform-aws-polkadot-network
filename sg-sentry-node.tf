@@ -3,6 +3,8 @@ module "sentry_node_sg" {
   name        = var.sentry_node_sg_name
   description = "All traffic"
 
+  create = local.sentry_enabled
+
   vpc_id = module.vpc.vpc_id
   tags = merge({
     Name : var.sentry_node_sg_name

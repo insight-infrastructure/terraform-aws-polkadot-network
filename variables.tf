@@ -112,8 +112,20 @@ variable "consul_enabled" {
   default     = false
 }
 
+variable "hids_enabled" {
+  description = "Boolean to enable intrusion detection systems traffic"
+  type        = bool
+  default     = false
+}
+
 variable "k8s_enabled" {
   description = "Boolean to allow vault related traffic"
+  type        = bool
+  default     = false
+}
+
+variable "logging_enabled" {
+  description = "Boolean to allow logging related traffic"
   type        = bool
   default     = false
 }
@@ -124,14 +136,8 @@ variable "monitoring_enabled" {
   default     = false
 }
 
-variable "hids_enabled" {
-  description = "Boolean to enable intrusion detection systems traffic"
-  type        = bool
-  default     = false
-}
-
-variable "logging_enabled" {
-  description = "Boolean to allow logging related traffic"
+variable "sentry_enabled" {
+  description = "Boolean to allow vault related traffic"
   type        = bool
   default     = false
 }
