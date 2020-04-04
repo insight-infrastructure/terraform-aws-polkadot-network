@@ -28,8 +28,12 @@ output "hids_security_group_id" {
   value = module.hids_sg.this_security_group_id
 }
 
+output "k8s_security_group_id" {
+  value = module.k8s_sg.this_security_group_id
+}
+
 output "logging_security_group_id" {
-  value = module.consul_sg.this_security_group_id
+  value = module.logging_sg.this_security_group_id
 }
 
 output "monitoring_security_group_id" {

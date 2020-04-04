@@ -112,6 +112,12 @@ variable "consul_enabled" {
   default     = false
 }
 
+variable "k8s_enabled" {
+  description = "Boolean to allow vault related traffic"
+  type        = bool
+  default     = false
+}
+
 variable "monitoring_enabled" {
   description = "Boolean to for prometheus related traffic"
   type        = bool
@@ -123,11 +129,13 @@ variable "hids_enabled" {
   type        = bool
   default     = false
 }
+
 variable "logging_enabled" {
   description = "Boolean to allow logging related traffic"
   type        = bool
   default     = false
 }
+
 variable "vault_enabled" {
   description = "Boolean to allow vault related traffic"
   type        = bool
@@ -150,6 +158,12 @@ variable "consul_sg_name" {
   description = "Name for the consult security group"
   type        = string
   default     = "consul-sg"
+}
+
+variable "k8s_sg_name" {
+  description = "Name for the consult security group"
+  type        = string
+  default     = "k8s-sg"
 }
 
 variable "monitoring_sg_name" {

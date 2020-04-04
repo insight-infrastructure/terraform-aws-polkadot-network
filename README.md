@@ -47,6 +47,8 @@ No issue is creating limit on this module.
 | hids\_enabled | Boolean to enable intrusion detection systems traffic | `bool` | `false` | no |
 | hids\_sg\_name | Name for the HIDS security group | `string` | `"hids-sg"` | no |
 | internal\_tld | The top level domain for the internal DNS | `string` | `"internal"` | no |
+| k8s\_enabled | Boolean to allow vault related traffic | `bool` | `false` | no |
+| k8s\_sg\_name | Name for the consult security group | `string` | `"k8s-sg"` | no |
 | logging\_enabled | Boolean to allow logging related traffic | `bool` | `false` | no |
 | logging\_sg\_name | Name for the logging security group | `string` | `"bastion-sg"` | no |
 | monitoring\_enabled | Boolean to for prometheus related traffic | `bool` | `false` | no |
@@ -72,6 +74,7 @@ No issue is creating limit on this module.
 | consul\_security\_group\_id | n/a |
 | hids\_security\_group\_id | n/a |
 | internal\_tld | n/a |
+| k8s\_security\_group\_id | n/a |
 | logging\_security\_group\_id | n/a |
 | monitoring\_security\_group\_id | n/a |
 | private\_subnets | n/a |
