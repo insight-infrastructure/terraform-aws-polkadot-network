@@ -20,9 +20,9 @@ output "bastion_security_group_id" {
   value = module.bastion_sg.this_security_group_id
 }
 
-output "consul_security_group_id" {
-  value = module.consul_sg.this_security_group_id
-}
+//output "consul_security_group_id" {
+//  value = module.consul_sg.this_security_group_id
+//}
 
 output "hids_security_group_id" {
   value = module.hids_sg.this_security_group_id
