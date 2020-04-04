@@ -20,6 +20,6 @@ module "k8s_sg" {
   ]
 
   ingress_rules = [
-    "http-tcp",
-  "https-tcp"]
+    "https-443-tcp",
+  "http-80-tcp"]
 }
