@@ -4,7 +4,7 @@ module "consul_sg" {
   name        = var.consul_sg_name
   description = "All traffic"
 
-  create = var.consul_enabled
+  create = local.consul_enabled
   vpc_id = module.vpc.vpc_id
   tags   = merge({ Name : var.consul_sg_name }, module.label.tags)
 }

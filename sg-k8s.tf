@@ -3,7 +3,7 @@ module "k8s_sg" {
   name        = var.k8s_sg_name
   description = "k8s workers traffic"
 
-  create = var.k8s_enabled
+  create = local.k8s_enabled
   vpc_id = module.vpc.vpc_id
   tags = merge({
     Name : var.k8s_sg_name

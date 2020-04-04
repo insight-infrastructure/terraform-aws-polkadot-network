@@ -4,7 +4,7 @@ module "monitoring_sg" {
   name        = var.monitoring_sg_name
   description = "All traffic"
 
-  create = var.monitoring_enabled
+  create = local.monitoring_enabled
 
   vpc_id = module.vpc.vpc_id
   tags = merge({

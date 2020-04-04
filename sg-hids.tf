@@ -4,7 +4,7 @@ module "hids_sg" {
   name        = var.hids_sg_name
   description = "All traffic"
 
-  create = var.hids_enabled
+  create = local.hids_enabled
   vpc_id = module.vpc.vpc_id
   tags = merge({
     Name : var.hids_sg_name

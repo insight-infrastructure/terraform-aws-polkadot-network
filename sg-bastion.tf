@@ -4,7 +4,7 @@ module "bastion_sg" {
   name        = var.bastion_sg_name
   description = "All traffic"
 
-  create = var.bastion_enabled
+  create = local.bastion_enabled
   vpc_id = module.vpc.vpc_id
   tags   = merge({ Name : var.bastion_sg_name }, module.label.tags)
 }

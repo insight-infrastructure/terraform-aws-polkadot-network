@@ -4,7 +4,7 @@ module "vault_sg" {
   name        = "vault"
   description = "All traffic"
 
-  create = var.vault_enabled
+  create = local.vault_enabled
   vpc_id = module.vpc.vpc_id
   tags   = merge({ Name : var.vault_sg_name }, module.label.tags)
 
