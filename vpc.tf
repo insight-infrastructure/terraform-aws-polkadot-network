@@ -1,3 +1,6 @@
+resource "random_pet" "this" {
+  length = 2
+}
 
 locals {
   //    Logic for AZs is azs variable > az_num variable > max azs for region
@@ -22,6 +25,8 @@ locals {
     local.subnet_bits,
     local.num_azs + subnet_num,
   )]
+
+  cluster_name = var.cluster_name == "" ? random_pet.this.id : var.cluster_name
 }
 
 data "aws_availability_zones" "available" {
@@ -46,4 +51,14 @@ module "vpc" {
 
   public_subnets  = local.public_subnets
   private_subnets = local.private_subnets
+
+  public_subnet_tags = {
+    "kubernetes.io/cluster/${local.cluster_name}" = "shared"
+    "kubernetes.io/role/elb"                      = "1"
+  }
+
+  private_subnet_tags = {
+    "kubernetes.io/cluster/${local.cluster_name}" = "shared"
+    "kubernetes.io/role/internal-elb"             = "1"
+  }
 }

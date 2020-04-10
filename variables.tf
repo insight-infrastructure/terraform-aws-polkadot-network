@@ -90,6 +90,13 @@ variable "cidr" {
   default     = "10.0.0.0/16"
 }
 
+
+variable "cluster_name" {
+  description = "k8s cluster name - blank gets random pet"
+  type        = string
+  default     = ""
+}
+
 ##################
 # Security Groups
 ##################
