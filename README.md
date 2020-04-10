@@ -75,6 +75,7 @@ No issue is creating limit on this module.
 |------|-------------|
 | azs | n/a |
 | bastion\_security\_group\_id | #### SGs #### |
+| cluster\_name | n/a |
 | hids\_security\_group\_id | n/a |
 | internal\_tld | n/a |
 | k8s\_security\_group\_id | n/a |

@@ -13,6 +13,10 @@ output "public_regional_domain" {
   value = var.create_public_regional_subdomain ? local.public_domain : ""
 }
 
+output "cluster_name" {
+  value = local.cluster_name
+}
+
 #####
 # SGs
 #####
