@@ -5,3 +5,7 @@ variable "aws_region" {
 provider "aws" {
   region = var.aws_region
 }
+
+provider "cloudflare" {
+  version = "~> 2.0"
+}

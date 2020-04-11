@@ -1,3 +1,9 @@
+variable "cloudflare_enable" {
+  description = "Make records in cloudflare"
+  type        = bool
+  default     = false
+}
+
 ########
 # Label
 ########

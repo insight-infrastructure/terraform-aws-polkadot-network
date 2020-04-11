@@ -13,4 +13,6 @@ locals {
   monitoring_enabled = var.all_enabled ? true : var.monitoring_enabled
   sentry_enabled     = var.all_enabled ? true : var.sentry_enabled
   vault_enabled      = var.all_enabled ? true : var.vault_enabled
+
+  cloudflare_enable = var.all_enabled ? true : var.cloudflare_enable
 }

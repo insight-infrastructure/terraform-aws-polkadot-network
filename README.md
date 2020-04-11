@@ -29,6 +29,7 @@ No issue is creating limit on this module.
 | Name | Version |
 |------|---------|
 | aws | n/a |
+| cloudflare | n/a |
 | random | n/a |
 
 ## Inputs
@@ -40,6 +41,7 @@ No issue is creating limit on this module.
 | bastion\_enabled | Boolean to enable a bastion host.  All ssh traffic restricted to bastion | `bool` | `false` | no |
 | bastion\_sg\_name | Name for the bastion security group | `string` | `"bastion-sg"` | no |
 | cidr | The cidr range for network | `string` | `"10.0.0.0/16"` | no |
+| cloudflare\_enable | Make records in cloudflare | `bool` | `false` | no |
 | cluster\_name | k8s cluster name - blank gets random pet | `string` | `""` | no |
 | consul\_enabled | Boolean to allow consul traffic | `bool` | `false` | no |
 | consul\_sg\_name | Name for the consult security group | `string` | `"consul-sg"` | no |
