@@ -4,6 +4,12 @@ variable "cloudflare_enable" {
   default     = false
 }
 
+variable "acm_enable" {
+  description = "Create ACM SSL"
+  type        = bool
+  default     = false
+}
+
 ########
 # Label
 ########

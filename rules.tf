@@ -14,6 +14,8 @@ locals {
   sentry_enabled     = var.all_enabled ? true : var.sentry_enabled
   vault_enabled      = var.all_enabled ? true : var.vault_enabled
 
+  acm_enable = var.all_enabled ? true : var.acm_enable
+
   cloudflare_enable = var.all_enabled ? true : var.cloudflare_enable
 
   create_public_regional_subdomain = var.all_enabled ? true : var.create_public_regional_subdomain

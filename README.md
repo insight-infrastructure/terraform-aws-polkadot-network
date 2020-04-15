@@ -36,6 +36,7 @@ No issue is creating limit on this module.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:-----:|
+| acm\_enable | Create ACM SSL | `bool` | `false` | no |
 | all\_enabled | Bool to enable all the security groups | `bool` | `false` | no |
 | azs | List of availability zones | `list(string)` | `[]` | no |
 | bastion\_enabled | Boolean to enable a bastion host.  All ssh traffic restricted to bastion | `bool` | `false` | no |
