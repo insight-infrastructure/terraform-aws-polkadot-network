@@ -10,25 +10,25 @@ variable "cloudflare_enable" {
 variable "environment" {
   description = "The environment"
   type        = string
-  default     = ""
+  default     = "test"
 }
 
 variable "namespace" {
   description = "The namespace to deploy into"
   type        = string
-  default     = ""
+  default     = "polkadot"
 }
 
 variable "stage" {
   description = "The stage of the deployment"
   type        = string
-  default     = ""
+  default     = "test"
 }
 
 variable "network_name" {
   description = "The network name, ie kusama / mainnet"
   type        = string
-  default     = ""
+  default     = "kusama"
 }
 
 variable "owner" {

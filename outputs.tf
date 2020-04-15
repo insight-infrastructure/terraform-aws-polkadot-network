@@ -18,6 +18,21 @@ output "cluster_name" {
 }
 
 #####
+# ACM
+#####
+output "acm_certificate_arn" {
+  value = module.acm.this_acm_certificate_arn
+}
+
+output "acm_certificate_validation_domains" {
+  value = module.acm.validation_domains
+}
+
+output "acm_certificate_distinct_domain_names" {
+  value = module.acm.distinct_domain_names
+}
+
+#####
 # SGs
 #####
 output "bastion_security_group_id" {

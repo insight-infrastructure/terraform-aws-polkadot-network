@@ -15,4 +15,7 @@ locals {
   vault_enabled      = var.all_enabled ? true : var.vault_enabled
 
   cloudflare_enable = var.all_enabled ? true : var.cloudflare_enable
+
+  create_public_regional_subdomain = var.all_enabled ? true : var.create_public_regional_subdomain
+  create_internal_domain           = var.all_enabled ? true : var.create_internal_domain
 }

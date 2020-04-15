@@ -13,10 +13,10 @@ data cloudflare_zones "this" {
 resource "cloudflare_record" "public_delegation" {
   count = local.cloudflare_enable && var.root_domain_name != "" ? 4 : 0
 
-  name    = "gcp.${var.network_name}.${var.root_domain_name}."
-  value   = join("", aws_route53_zone.region_public.*.name_servers[count.index])
+  name    = "aws.${var.network_name}.${var.root_domain_name}."
+  value   = flatten(aws_route53_zone.region_public.*.name_servers)[count.index]
   type    = "NS"
-  zone_id = join("", data.cloudflare_zones.this.*.zones[0].id)
+  zone_id = data.cloudflare_zones.this.*.zones[0][0].id
 }
 
 
@@ -26,8 +26,8 @@ data "aws_route53_zone" "this" {
 }
 
 resource "aws_route53_zone" "root_private" {
-  count = var.create_internal_domain ? 1 : 0
-  name  = "${var.namespace}.${var.internal_tld}"
+  count = local.create_internal_domain ? 1 : 0
+  name  = "${var.namespace}.${var.internal_tld}."
 
   dynamic "vpc" {
     for_each = local.vpc_ids
@@ -41,7 +41,7 @@ resource "aws_route53_zone" "root_private" {
 }
 
 resource "aws_route53_zone" "region_public" {
-  count = var.create_public_regional_subdomain ? 1 : 0
+  count = local.create_public_regional_subdomain ? 1 : 0
 
   name = local.public_domain
 
@@ -49,7 +49,7 @@ resource "aws_route53_zone" "region_public" {
 }
 
 resource "aws_route53_record" "region_public" {
-  count = var.create_public_regional_subdomain ? 1 : 0
+  count = local.create_public_regional_subdomain ? 1 : 0
 
   zone_id = var.zone_id == "" ? join("", data.aws_route53_zone.this.*.id) : var.zone_id
 
