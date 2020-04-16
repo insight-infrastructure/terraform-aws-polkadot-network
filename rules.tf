@@ -16,7 +16,7 @@ locals {
 
   acm_enable = var.all_enabled ? true : var.acm_enable
 
-  cloudflare_enable = var.all_enabled ? true : var.cloudflare_enable
+  cloudflare_enable = var.all_enabled ? true : var.cloudflare_enable && var.root_domain_name != ""
 
   create_public_regional_subdomain = var.all_enabled ? true : var.create_public_regional_subdomain
   create_internal_domain           = var.all_enabled ? true : var.create_internal_domain

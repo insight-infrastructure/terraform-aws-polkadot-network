@@ -11,9 +11,10 @@ data cloudflare_zones "this" {
 }
 
 resource "cloudflare_record" "public_delegation" {
-  count = local.cloudflare_enable && var.root_domain_name != "" ? 4 : 0
+  count = local.cloudflare_enable ? 4 : 0
 
-  name    = "aws.${var.network_name}.${var.root_domain_name}."
+  //  name    = "aws.${var.network_name}.${var.root_domain_name}."
+  name    = local.public_domain
   value   = flatten(aws_route53_zone.region_public.*.name_servers)[count.index]
   type    = "NS"
   zone_id = data.cloudflare_zones.this.*.zones[0][0].id
