@@ -1,6 +1,6 @@
 locals {
   vpc_ids       = [module.vpc.vpc_id]
-  public_domain = join(".", [data.aws_region.current.name, var.environment, "aws", var.network_name, var.root_domain_name])
+  public_domain = join(".", [data.aws_region.current.name, "aws.polkadot", var.root_domain_name])
 }
 
 data cloudflare_zones "this" {
@@ -21,9 +21,9 @@ resource "cloudflare_record" "public_delegation" {
 }
 
 
-data "aws_route53_zone" "this" {
+resource "aws_route53_zone" "this" {
   count = var.root_domain_name == "" ? 0 : 1
-  name  = "${var.root_domain_name}."
+  name  = "aws.polkadot.${var.root_domain_name}."
 }
 
 resource "aws_route53_zone" "root_private" {
@@ -52,7 +52,7 @@ resource "aws_route53_zone" "region_public" {
 resource "aws_route53_record" "region_public" {
   count = local.create_public_regional_subdomain ? 1 : 0
 
-  zone_id = var.zone_id == "" ? join("", data.aws_route53_zone.this.*.id) : var.zone_id
+  zone_id = var.zone_id == "" ? join("", aws_route53_zone.this.*.id) : var.zone_id
 
   name = local.public_domain
   type = "NS"
