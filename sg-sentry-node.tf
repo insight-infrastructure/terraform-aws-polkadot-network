@@ -23,6 +23,13 @@ module "sentry_node_sg" {
       source_security_group_id = module.monitoring_sg.this_security_group_id
     },
     {
+      from_port                = 9610
+      to_port                  = 9610
+      protocol                 = "tcp"
+      description              = "Client exporter"
+      source_security_group_id = module.monitoring_sg.this_security_group_id
+    },
+    {
       from_port                = 9323
       to_port                  = 9323
       protocol                 = "tcp"
