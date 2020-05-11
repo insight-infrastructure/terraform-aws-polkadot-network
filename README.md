@@ -30,7 +30,6 @@ No issue is creating limit on this module.
 |------|---------|
 | aws | n/a |
 | cloudflare | n/a |
-| random | n/a |
 
 ## Inputs
 

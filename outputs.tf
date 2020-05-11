@@ -14,7 +14,7 @@ output "public_regional_domain" {
 }
 
 output "cluster_name" {
-  value = local.cluster_name
+  value = module.label.id
 }
 
 #####

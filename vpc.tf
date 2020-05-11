@@ -1,7 +1,3 @@
-resource "random_pet" "this" {
-  length = 2
-}
-
 locals {
   //    Logic for AZs is azs variable > az_num variable > max azs for region
   az_num = chunklist(data.aws_availability_zones.available.names, var.num_azs)[0]
@@ -25,8 +21,6 @@ locals {
     local.subnet_bits,
     local.num_azs + subnet_num,
   )]
-
-  cluster_name = var.cluster_name == "" ? random_pet.this.id : var.cluster_name
 }
 
 data "aws_availability_zones" "available" {
