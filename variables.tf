@@ -103,11 +103,11 @@ variable "cidr" {
 }
 
 
-variable "cluster_name" {
-  description = "k8s cluster name - blank gets random pet"
-  type        = string
-  default     = ""
-}
+//variable "cluster_name" {
+//  description = "k8s cluster name - blank gets random pet"
+//  type        = string
+//  default     = ""
+//}
 
 ##################
 # Security Groups

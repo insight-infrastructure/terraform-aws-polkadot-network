@@ -27,10 +27,10 @@ module "consul_sg" {
       protocol                 = "tcp"
       description              = "wazuh agent"
       source_security_group_id = module.monitoring_sg.this_security_group_id
-    }] : [])
+  }] : [])
 
   ingress_cidr_blocks = local.consul_enabled ? [
-    module.vpc.vpc_cidr_block] : []
+  module.vpc.vpc_cidr_block] : []
   ingress_rules = local.consul_enabled ? [
     "consul-tcp",
     "consul-serf-wan-tcp",
@@ -38,17 +38,17 @@ module "consul_sg" {
     "consul-serf-lan-tcp",
     "consul-serf-lan-udp",
     "consul-dns-tcp",
-    "consul-dns-udp"] : []
+  "consul-dns-udp"] : []
 
   ingress_with_cidr_blocks = concat(local.bastion_enabled ? [] :
-  [
-    {
-      from_port   = 22
-      to_port     = 22
-      protocol    = "tcp"
-      description = "Security group for ssh access from coporate ip"
-      cidr_blocks = var.corporate_ip == "" ? "0.0.0.0/0" : "${var.corporate_ip}/32"
-    }])
+    [
+      {
+        from_port   = 22
+        to_port     = 22
+        protocol    = "tcp"
+        description = "Security group for ssh access from coporate ip"
+        cidr_blocks = var.corporate_ip == "" ? "0.0.0.0/0" : "${var.corporate_ip}/32"
+  }])
 
   egress_with_cidr_blocks = [
     {
@@ -57,5 +57,5 @@ module "consul_sg" {
       protocol    = -1
       description = "Egress access open to all"
       cidr_blocks = "0.0.0.0/0"
-    }, ]
+  }, ]
 }

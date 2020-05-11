@@ -43,7 +43,6 @@ No issue is creating limit on this module.
 | bastion\_sg\_name | Name for the bastion security group | `string` | `"bastion-sg"` | no |
 | cidr | The cidr range for network | `string` | `"10.0.0.0/16"` | no |
 | cloudflare\_enable | Make records in cloudflare | `bool` | `false` | no |
-| cluster\_name | k8s cluster name - blank gets random pet | `string` | `""` | no |
 | consul\_enabled | Boolean to allow consul traffic | `bool` | `false` | no |
 | consul\_sg\_name | Name for the consult security group | `string` | `"consul-sg"` | no |
 | corporate\_ip | The corporate IP you want to restrict ssh traffic to | `string` | `""` | no |
@@ -82,6 +81,7 @@ No issue is creating limit on this module.
 | azs | n/a |
 | bastion\_security\_group\_id | #### SGs #### |
 | cluster\_name | n/a |
+| consul\_security\_group\_id | n/a |
 | hids\_security\_group\_id | n/a |
 | internal\_tld | n/a |
 | k8s\_security\_group\_id | n/a |
