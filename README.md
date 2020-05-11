@@ -56,7 +56,7 @@ No issue is creating limit on this module.
 | k8s\_enabled | Boolean to allow vault related traffic | `bool` | `false` | no |
 | k8s\_sg\_name | Name for the consult security group | `string` | `"k8s-sg"` | no |
 | logging\_enabled | Boolean to allow logging related traffic | `bool` | `false` | no |
-| logging\_sg\_name | Name for the logging security group | `string` | `"bastion-sg"` | no |
+| logging\_sg\_name | Name for the logging security group | `string` | `"logging-sg"` | no |
 | monitoring\_enabled | Boolean to for prometheus related traffic | `bool` | `false` | no |
 | monitoring\_sg\_name | Name for the monitoring security group | `string` | `"monitoring-sg"` | no |
 | namespace | The namespace to deploy into | `string` | `"polkadot"` | no |
@@ -65,10 +65,10 @@ No issue is creating limit on this module.
 | owner | n/a | `string` | `""` | no |
 | root\_domain\_name | The public domain | `string` | `""` | no |
 | sentry\_enabled | Boolean to allow vault related traffic | `bool` | `false` | no |
-| sentry\_node\_sg\_name | Name for the public node security group | `string` | `"sentry-sg"` | no |
+| sentry\_sg\_name | Name for the public node security group | `string` | `"sentry-sg"` | no |
 | stage | The stage of the deployment | `string` | `"test"` | no |
 | vault\_enabled | Boolean to allow vault related traffic | `bool` | `false` | no |
-| vault\_sg\_name | Name for the vault security group | `string` | `"bastion-sg"` | no |
+| vault\_sg\_name | Name for the vault security group | `string` | `"vault-sg"` | no |
 | vpc\_name | The name of the VPC | `string` | `""` | no |
 | zone\_id | The zone ID to configure as the root zoon - ie subdomain.example.com's zone ID | `string` | `""` | no |
 

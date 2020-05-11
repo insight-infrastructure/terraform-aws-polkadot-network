@@ -112,7 +112,6 @@ variable "cluster_name" {
 ##################
 # Security Groups
 ##################
-
 variable "corporate_ip" {
   description = "The corporate IP you want to restrict ssh traffic to"
   type        = string
@@ -167,7 +166,7 @@ variable "vault_enabled" {
   default     = false
 }
 
-variable "sentry_node_sg_name" {
+variable "sentry_sg_name" {
   description = "Name for the public node security group"
   type        = string
   default     = "sentry-sg"
@@ -206,11 +205,11 @@ variable "hids_sg_name" {
 variable "logging_sg_name" {
   description = "Name for the logging security group"
   type        = string
-  default     = "bastion-sg"
+  default     = "logging-sg"
 }
 
 variable "vault_sg_name" {
   description = "Name for the vault security group"
   type        = string
-  default     = "bastion-sg"
+  default     = "vault-sg"
 }

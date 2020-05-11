@@ -1,13 +1,13 @@
 module "sentry_node_sg" {
   source      = "github.com/terraform-aws-modules/terraform-aws-security-group.git?ref=v3.2.0"
-  name        = var.sentry_node_sg_name
+  name        = var.sentry_sg_name
   description = "All traffic"
 
   create = local.sentry_enabled
 
   vpc_id = module.vpc.vpc_id
   tags = merge({
-    Name : var.sentry_node_sg_name
+    Name : var.sentry_sg_name
   }, module.label.tags)
 
   ingress_with_source_security_group_id = concat(local.bastion_enabled ? [
