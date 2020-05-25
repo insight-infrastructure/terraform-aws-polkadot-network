@@ -24,6 +24,12 @@ module "this" {
 No issue is creating limit on this module.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+## Requirements
+
+| Name | Version |
+|------|---------|
+| terraform | >= 0.12 |
+
 ## Providers
 
 | Name | Version |
@@ -34,7 +40,7 @@ No issue is creating limit on this module.
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:-----:|
+|------|-------------|------|---------|:--------:|
 | acm\_enable | Create ACM SSL | `bool` | `false` | no |
 | all\_enabled | Bool to enable all the security groups | `bool` | `false` | no |
 | azs | List of availability zones | `list(string)` | `[]` | no |

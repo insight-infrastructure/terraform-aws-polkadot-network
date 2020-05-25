@@ -85,6 +85,13 @@ module "sentry_node_sg" {
         description = ""
         cidr_blocks = "0.0.0.0/0"
       },
+      {
+        from_port   = 9944
+        to_port     = 9944
+        protocol    = "tcp"
+        description = ""
+        cidr_blocks = "0.0.0.0/0"
+      },
     ], local.bastion_enabled ? [] :
     [
       {
