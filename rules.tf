@@ -1,8 +1,4 @@
-variable "all_enabled" {
-  description = "Bool to enable all the security groups"
-  type        = bool
-  default     = false
-}
+
 
 locals {
   bastion_enabled    = var.all_enabled ? true : var.bastion_enabled

@@ -112,6 +112,12 @@ variable "cidr" {
 ##################
 # Security Groups
 ##################
+variable "all_enabled" {
+  description = "Bool to enable all the security groups"
+  type        = bool
+  default     = false
+}
+
 variable "corporate_ip" {
   description = "The corporate IP you want to restrict ssh traffic to"
   type        = string
