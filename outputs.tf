@@ -13,24 +13,24 @@ output "public_regional_domain" {
   value = var.create_public_regional_subdomain ? local.public_domain : ""
 }
 
-output "cluster_name" {
-  value = module.label.id
-}
+//output "cluster_name" {
+//  value = var.name
+//}
 
 #####
 # ACM
 #####
-output "acm_certificate_arn" {
-  value = module.acm.this_acm_certificate_arn
-}
-
-output "acm_certificate_validation_domains" {
-  value = module.acm.validation_domains
-}
-
-output "acm_certificate_distinct_domain_names" {
-  value = module.acm.distinct_domain_names
-}
+//output "acm_certificate_arn" {
+//  value = module.acm.this_acm_certificate_arn
+//}
+//
+//output "acm_certificate_validation_domains" {
+//  value = module.acm.validation_domains
+//}
+//
+//output "acm_certificate_distinct_domain_names" {
+//  value = module.acm.distinct_domain_names
+//}
 
 #####
 # SGs

@@ -1,7 +1,14 @@
 locals {
-  vpc_ids       = [module.vpc.vpc_id]
-  public_root   = join(".", ["aws", var.network_name, var.namespace, var.root_domain_name])
-  public_domain = join(".", [data.aws_region.current.name, local.public_root])
+  vpc_ids = [module.vpc.vpc_id]
+  # Preserving some old patterns with a little override logic
+  # Useful for geo-routing. Otherwise just leave all domain vars
+  # except for root domain blank
+  subdomain = var.subdomain == "" ? join(".", compact(["aws", var.network_name, var.namespace])) : var.subdomain
+
+  domain = join(".", compact([local.subdomain, var.root_domain_name]))
+
+  public_root   = var.subdomain == "" ? join(".", compact([local.subdomain, var.root_domain_name])) : var.root_domain_name
+  public_domain = var.subdomain == "" ? join(".", [data.aws_region.current.name, local.public_root]) : join(".", [var.subdomain, local.public_root])
 }
 
 data cloudflare_zones "this" {
@@ -39,7 +46,7 @@ resource "aws_route53_zone" "root_private" {
     }
   }
 
-  tags = merge(module.label.tags, { "Region" = data.aws_region.current.name, "ZoneType" = "Private" })
+  tags = merge(var.tags, { "Region" = data.aws_region.current.name, "ZoneType" = "Private" })
 }
 
 resource "aws_route53_zone" "region_public" {
@@ -47,7 +54,7 @@ resource "aws_route53_zone" "region_public" {
 
   name = local.public_domain
 
-  tags = merge(module.label.tags, { "Region" = data.aws_region.current.name, "ZoneType" = "PublicRegion" })
+  tags = merge(var.tags, { "Region" = data.aws_region.current.name, "ZoneType" = "PublicRegion" })
 }
 
 resource "aws_route53_record" "region_public" {

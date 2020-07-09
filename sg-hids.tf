@@ -8,7 +8,7 @@ module "hids_sg" {
   vpc_id = module.vpc.vpc_id
   tags = merge({
     Name : var.hids_sg_name
-  }, module.label.tags)
+  }, var.tags)
 
   egress_with_cidr_blocks = [{
     from_port   = 0

@@ -6,7 +6,7 @@ module "vault_sg" {
 
   create = local.vault_enabled
   vpc_id = module.vpc.vpc_id
-  tags   = merge({ Name : var.vault_sg_name }, module.label.tags)
+  tags   = merge({ Name : var.vault_sg_name }, var.tags)
 
   //  TODO: Fix these ports
   //  Long term: With logic to join all the groups that need joining and overview of who needs access to Vault

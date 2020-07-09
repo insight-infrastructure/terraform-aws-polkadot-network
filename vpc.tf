@@ -31,7 +31,7 @@ module "vpc" {
   source = "github.com/terraform-aws-modules/terraform-aws-vpc.git?ref=v2.15.0"
   name   = var.vpc_name
 
-  tags = module.label.tags
+  tags = var.tags
 
   enable_nat_gateway     = false
   single_nat_gateway     = false
@@ -47,12 +47,12 @@ module "vpc" {
   private_subnets = local.private_subnets
 
   public_subnet_tags = {
-    "kubernetes.io/cluster/${module.label.id}" = "shared"
-    "kubernetes.io/role/elb"                   = "1"
+    "kubernetes.io/cluster/${local.id}" = "shared"
+    "kubernetes.io/role/elb"            = "1"
   }
 
   private_subnet_tags = {
-    "kubernetes.io/cluster/${module.label.id}" = "shared"
-    "kubernetes.io/role/internal-elb"          = "1"
+    "kubernetes.io/cluster/${local.id}" = "shared"
+    "kubernetes.io/role/internal-elb"   = "1"
   }
 }

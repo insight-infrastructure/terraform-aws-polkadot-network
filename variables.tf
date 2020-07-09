@@ -4,20 +4,32 @@ variable "cloudflare_enable" {
   default     = false
 }
 
-variable "acm_enable" {
-  description = "Create ACM SSL"
-  type        = bool
-  default     = false
-}
+//variable "acm_enable" {
+//  description = "Create ACM SSL"
+//  type        = bool
+//  default     = false
+//}
 
 ########
 # Label
 ########
-variable "environment" {
-  description = "The environment"
+variable "name" {
+  description = "The name of the deployment"
   type        = string
-  default     = "test"
+  default     = "polkadot-api"
 }
+
+variable "tags" {
+  description = "The tags of the deployment"
+  type        = map(string)
+  default     = {}
+}
+
+//variable "environment" {
+//  description = "The environment"
+//  type        = string
+//  default     = "test"
+//}
 
 variable "namespace" {
   description = "The namespace to deploy into"
@@ -25,11 +37,11 @@ variable "namespace" {
   default     = "polkadot"
 }
 
-variable "stage" {
-  description = "The stage of the deployment"
-  type        = string
-  default     = "test"
-}
+//variable "stage" {
+//  description = "The stage of the deployment"
+//  type        = string
+//  default     = "test"
+//}
 
 variable "network_name" {
   description = "The network name, ie kusama / mainnet"
@@ -37,14 +49,27 @@ variable "network_name" {
   default     = "kusama"
 }
 
-variable "owner" {
-  type    = string
-  default = ""
-}
+//variable "owner" {
+//  type    = string
+//  default = ""
+//}
 
 ######
 # DNS
 ######
+
+variable "subdomain" {
+  description = ""
+  type        = string
+  default     = ""
+}
+
+//variable "fqdn" {
+//  description = ""
+//  type = string
+////  default = ""
+//}
+
 variable "internal_tld" {
   description = "The top level domain for the internal DNS"
   type        = string
@@ -101,7 +126,6 @@ variable "cidr" {
   type        = string
   default     = "10.0.0.0/16"
 }
-
 
 //variable "cluster_name" {
 //  description = "k8s cluster name - blank gets random pet"

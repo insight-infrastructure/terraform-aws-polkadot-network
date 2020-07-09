@@ -6,7 +6,7 @@ module "consul_sg" {
 
   create = local.consul_enabled
   vpc_id = module.vpc.vpc_id
-  tags   = merge({ Name : var.consul_sg_name }, module.label.tags)
+  tags   = merge({ Name : var.consul_sg_name }, var.tags)
 
 
   ingress_with_source_security_group_id = concat(local.bastion_enabled ? [

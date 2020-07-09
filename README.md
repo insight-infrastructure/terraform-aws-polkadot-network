@@ -35,7 +35,6 @@ No issue is creating limit on this module.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:-----:|
-| acm\_enable | Create ACM SSL | `bool` | `false` | no |
 | all\_enabled | Bool to enable all the security groups | `bool` | `false` | no |
 | azs | List of availability zones | `list(string)` | `[]` | no |
 | bastion\_enabled | Boolean to enable a bastion host.  All ssh traffic restricted to bastion | `bool` | `false` | no |
@@ -47,7 +46,6 @@ No issue is creating limit on this module.
 | corporate\_ip | The corporate IP you want to restrict ssh traffic to | `string` | `""` | no |
 | create\_internal\_domain | Boolean to create an internal split horizon DNS | `bool` | `false` | no |
 | create\_public\_regional\_subdomain | Boolean to create regional subdomain - ie us-east-1.example.com | `bool` | `false` | no |
-| environment | The environment | `string` | `"test"` | no |
 | hids\_enabled | Boolean to enable intrusion detection systems traffic | `bool` | `false` | no |
 | hids\_sg\_name | Name for the HIDS security group | `string` | `"hids-sg"` | no |
 | internal\_tld | The top level domain for the internal DNS | `string` | `"internal"` | no |
@@ -57,14 +55,15 @@ No issue is creating limit on this module.
 | logging\_sg\_name | Name for the logging security group | `string` | `"logging-sg"` | no |
 | monitoring\_enabled | Boolean to for prometheus related traffic | `bool` | `false` | no |
 | monitoring\_sg\_name | Name for the monitoring security group | `string` | `"monitoring-sg"` | no |
+| name | The name of the deployment | `string` | `"polkadot-api"` | no |
 | namespace | The namespace to deploy into | `string` | `"polkadot"` | no |
 | network\_name | The network name, ie kusama / mainnet | `string` | `"kusama"` | no |
 | num\_azs | The number of AZs to deploy into | `number` | `0` | no |
-| owner | n/a | `string` | `""` | no |
 | root\_domain\_name | The public domain | `string` | `""` | no |
 | sentry\_enabled | Boolean to allow vault related traffic | `bool` | `false` | no |
 | sentry\_sg\_name | Name for the public node security group | `string` | `"sentry-sg"` | no |
-| stage | The stage of the deployment | `string` | `"test"` | no |
+| subdomain | n/a | `string` | `""` | no |
+| tags | The tags of the deployment | `map(string)` | `{}` | no |
 | vault\_enabled | Boolean to allow vault related traffic | `bool` | `false` | no |
 | vault\_sg\_name | Name for the vault security group | `string` | `"vault-sg"` | no |
 | vpc\_name | The name of the VPC | `string` | `""` | no |
@@ -74,12 +73,8 @@ No issue is creating limit on this module.
 
 | Name | Description |
 |------|-------------|
-| acm\_certificate\_arn | #### ACM #### |
-| acm\_certificate\_distinct\_domain\_names | n/a |
-| acm\_certificate\_validation\_domains | n/a |
 | azs | n/a |
 | bastion\_security\_group\_id | #### SGs #### |
-| cluster\_name | n/a |
 | consul\_security\_group\_id | n/a |
 | hids\_security\_group\_id | n/a |
 | internal\_tld | n/a |
