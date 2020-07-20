@@ -1,117 +1,64 @@
-action:
-  type: stat
-  input: Configure deployment # Makes automation still ask for configuration
+---
+available_regions_:
+  type: aws_azs
+  region: "{{ nuki.region }}"
+  when: "{{ nuki.region is not defined }}"
 
-manual_action:
+region:
+  type: list
+  message: Which region would you like to deploy into?
+  choices: "{{ nuki.available_regions_ }}"
+  when: "{{ nuki.region is not defined }}"
+
+available_azs_:
+  type: aws_azs
+  region: "{{ nuki.region }}"
+
+azs:
+  type: checkbox
+  message: "What availability zones do you want to deploy in {{ nuki.region }}?"
+  choices: "{{ nuki.available_azs_ }}"
+
+dns_type_:
+  type: list
+  message: How do you want to setup DNS?
+  choices:
+    - no_dns: No dns
+    - single_dns: Single region single domain
+    - cloudflare_dns: Cloudflare based multi-region georouted
+
+dns_settings_:
   type: block
-  when: "{{ nuki.region is not defined }}" # Means we are running manually
+  when: "{{ nuki.dns_type_ in ['single_dns', 'cloudflare_dns'] }}"
   items:
-    action:
-      type: list
-      message: What are you trying to do?
-      choices:
-        - Configure deployment
-        - Install prerequisites
-        - Test the module
-        - Deploy module
+    root_domain_name:
+      type: input
+      message: |
+        What is your root domain? Example: example.com
 
-    install:
-      type: nukikata
-      when: "{{ nuki.action == 'Install prerequisites' }}"
+    subdomain:
+      type: input
+      message: |
+        What subdomain? Example: <your subdomain>.example.com{% if nuki.dns_type == 'single_dns' %}
+          - Leave blank for root dns records > {% elif nuki.dns_type == 'cloudflare_dns' %}
+          - If georouted and left blank, will fallback on `namespace` variable
+            which defaults to polkadot per the convention:
+            <region>.aws.<mainnet/kusama>.<namespace>.example.com
+            If supplied will go to <subdomain>.example.com but needs additional
+            consideration for zoning > {% endif %}
 
-    test:
-      type: command
-      command: make test
-      when: "{{ nuki.action == 'Test the module' }}"
+vars_confirm_:
+  type: confirm
+  message: Do you want to configure other variables?
 
-    deploy:
-      type: block
-      when: "{{ nuki.action in ['Configure deployment', 'Deploy the module'] }}"
-      items:
-        configure_bool:
-          type: confirm
-          message: Do you want to configure it or use minimum defaults?
-
-        aws_regions_options:
-          type: aws_regions
-          when: "{{ nuki.region is not defined }}"
-
-        region:
-          type: list
-          message: Which AWS region do you want to deploy into?
-          choices: "{{ nuki.aws_regions_options }}"
-          when: "{{ nuki.region is not defined }}"
-
-configuration:
-  type: block
-  when: "{{ nuki.deploy is defined or nuki.action == 'Configure deployment' }}"
-  items:
-
-    # TODO: Need to implement vpc module override -> tf v0.13?
-    #network_type:
-    #  type: list
-    #  message: Do you want to...?
-    #  name: things
-    #  choices:
-    #    - create: Create a new network
-    #    - join: Join existing VPC?
-    #    - default: Use default VPC
-
-    available_azs:
-      type: aws_azs
-      region: "{{ nuki.region }}"
-
-    azs:
-      type: checkbox
-      message: "What availability zones do you want to deploy in {{ nuki.region }}?"
-      choices: "{{ nuki.available_azs }}"
-
-    dns_type:
-      type: list
-      message: How do you want to setup DNS?
-      choices:
-        - no_dns: No dns
-        - single_dns: Single region single domain
-        - cloudflare_dns: Cloudflare based multi-region georouted
-
-    dns_settings:
-      type: block
-      when: "{{ nuki.dns_type in ['single_dns', 'cloudflare_dns'] }}"
-      items:
-        root_domain_name:
-          type: input
-          message: |
-            What is your root domain? Example: example.com
-
-        subdomain:
-          type: input
-          when: "{{ nuki.dns_type in ['single_dns', 'cloudflare_dns'] }}"
-          message: |
-            What subdomain? Example: <your subdomain>.example.com{% if nuki.dns_type == 'single_dns' %}
-              - Leave blank for root dns records > {% elif nuki.dns_type == 'cloudflare_dns' %}
-              - If georouted and left blank, will fallback on `namespace` variable
-                which defaults to polkadot per the convention:
-                <region>.aws.<mainnet/kusama>.<namespace>.example.com
-                If supplied will go to <subdomain>.example.com but needs additional
-                consideration for zoning > {% endif %}
-
-    vars_confirm:
-      type: confirm
-      message: Do you want to configure other variables?
-
-    sg_vars:
-      type: terraform_variables
-      when: "{{ nuki.vars_confirm }}"
-      variables_file: variables.tf
-      merge: true
-      var_list:
-        - internal_tld
-        - cidr
-        - corporate_ip
-        - bastion_enabled
-        - vault_enabled
-
-#output:
-#  type: yaml
-#  path: debug.yaml
-#  contents: "{{ nuki }}"
+sg_vars:
+  type: terraform_variables
+  when: "{{ nuki.vars_confirm_ }}"
+  variables_file: variables.tf
+  merge: true
+  var_list:
+    - internal_tld
+    - cidr
+    - corporate_ip
+    - bastion_enabled
+    - k8s_enabled
