@@ -9,7 +9,7 @@ module "monitoring_sg" {
   vpc_id = module.vpc.vpc_id
   tags = merge({
     Name : var.monitoring_sg_name
-  }, module.label.tags)
+  }, var.tags)
 
   ingress_with_cidr_blocks = concat([{
     from_port   = 80

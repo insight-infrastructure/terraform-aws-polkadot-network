@@ -6,7 +6,7 @@ module "bastion_sg" {
 
   create = local.bastion_enabled
   vpc_id = module.vpc.vpc_id
-  tags   = merge({ Name : var.bastion_sg_name }, module.label.tags)
+  tags   = merge({ Name : var.bastion_sg_name }, var.tags)
 }
 
 resource "aws_security_group_rule" "bastion-ssh" {

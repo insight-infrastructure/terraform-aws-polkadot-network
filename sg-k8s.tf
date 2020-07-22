@@ -7,7 +7,7 @@ module "k8s_sg" {
   vpc_id = module.vpc.vpc_id
   tags = merge({
     Name : var.k8s_sg_name
-  }, module.label.tags)
+  }, var.tags)
 
   egress_with_cidr_blocks = [
     {

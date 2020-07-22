@@ -1,10 +1,8 @@
-variable "all_enabled" {
-  description = "Bool to enable all the security groups"
-  type        = bool
-  default     = false
-}
+
 
 locals {
+  id = var.name
+
   bastion_enabled    = var.all_enabled ? true : var.bastion_enabled
   consul_enabled     = var.all_enabled ? true : var.consul_enabled
   hids_enabled       = var.all_enabled ? true : var.hids_enabled
@@ -14,10 +12,10 @@ locals {
   sentry_enabled     = var.all_enabled ? true : var.sentry_enabled
   vault_enabled      = var.all_enabled ? true : var.vault_enabled
 
-  acm_enable = var.all_enabled ? true : var.acm_enable
+  //  acm_enable = var.all_enabled ? true : var.acm_enable
 
-  cloudflare_enable = var.all_enabled ? true : var.cloudflare_enable && var.root_domain_name != ""
+  cloudflare_enable = var.all_enabled ? true : var.cloudflare_enable && var.root_domain_name != "" && var.subdomain == ""
 
-  create_public_regional_subdomain = var.all_enabled ? true : var.create_public_regional_subdomain
+  create_public_regional_subdomain = var.cloudflare_enable ? true : var.create_public_regional_subdomain
   create_internal_domain           = var.all_enabled ? true : var.create_internal_domain
 }

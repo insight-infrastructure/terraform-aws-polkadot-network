@@ -8,7 +8,7 @@ module "sentry_node_sg" {
   vpc_id = module.vpc.vpc_id
   tags = merge({
     Name : var.sentry_sg_name
-  }, module.label.tags)
+  }, var.tags)
 
   ingress_with_source_security_group_id = concat(local.bastion_enabled ? [
     {
