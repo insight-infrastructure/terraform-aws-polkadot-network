@@ -1,4 +1,9 @@
 ---
+
+print_:
+  type: print
+  statement: Configuring Polkadot AWS Network
+
 available_regions_:
   type: aws_azs
   region: "{{ nuki.region }}"
