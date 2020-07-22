@@ -10,7 +10,7 @@ output "internal_tld" {
 }
 
 output "public_regional_domain" {
-  value = var.create_public_regional_subdomain ? local.public_domain : ""
+  value = local.create_public_regional_subdomain ? local.public_domain : ""
 }
 
 //output "cluster_name" {
