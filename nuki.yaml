@@ -46,8 +46,8 @@ subdomain:
   type: input
   when: "{{ nuki.dns_type_ in ['single_dns', 'cloudflare_dns'] }}"
   message: |
-    What subdomain? Example: <your subdomain>.example.com{% if nuki.dns_type == 'single_dns' %}
-      - Leave blank for root dns records > {% elif nuki.dns_type == 'cloudflare_dns' %}
+    What subdomain? Example: <your subdomain>.example.com{% if nuki.dns_type_ == 'single_dns' %}
+      - Leave blank for root dns records > {% elif nuki.dns_type_ == 'cloudflare_dns' %}
       - If georouted and left blank, will fallback on `namespace` variable
         which defaults to polkadot per the convention:
         <region>.aws.<mainnet/kusama>.<namespace>.example.com
