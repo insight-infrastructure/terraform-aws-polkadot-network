@@ -10,7 +10,7 @@ available_regions_:
   when: "{{ nuki.region is not defined }}"
 
 region:
-  type: list
+  type: select
   message: Which region would you like to deploy into?
   choices: "{{ nuki.available_regions_ }}"
   when: "{{ nuki.region is not defined }}"
@@ -25,12 +25,17 @@ azs:
   choices: "{{ nuki.available_azs_ }}"
 
 dns_type_:
-  type: list
+  type: select
   message: How do you want to setup DNS?
   choices:
     - no_dns: No dns
     - single_dns: Single region single domain
     - cloudflare_dns: Cloudflare based multi-region georouted
+
+cloudflare_enable:
+  type: stat
+  input: true
+  when: "{{ 'cloudflare_dns' in nuki.dns_type_ }}"
 
 dns_settings_:
   type: block
