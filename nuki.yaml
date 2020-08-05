@@ -37,25 +37,22 @@ cloudflare_enable:
   input: true
   when: "{{ 'cloudflare_dns' in nuki.dns_type_ }}"
 
-dns_settings_:
-  type: block
+root_domain_name:
+  type: input
   when: "{{ nuki.dns_type_ in ['single_dns', 'cloudflare_dns'] }}"
-  items:
-    root_domain_name:
-      type: input
-      message: |
-        What is your root domain? Example: example.com
+  message: What is your root domain - ie examle.com?
 
-    subdomain:
-      type: input
-      message: |
-        What subdomain? Example: <your subdomain>.example.com{% if nuki.dns_type == 'single_dns' %}
-          - Leave blank for root dns records > {% elif nuki.dns_type == 'cloudflare_dns' %}
-          - If georouted and left blank, will fallback on `namespace` variable
-            which defaults to polkadot per the convention:
-            <region>.aws.<mainnet/kusama>.<namespace>.example.com
-            If supplied will go to <subdomain>.example.com but needs additional
-            consideration for zoning > {% endif %}
+subdomain:
+  type: input
+  when: "{{ nuki.dns_type_ in ['single_dns', 'cloudflare_dns'] }}"
+  message: |
+    What subdomain? Example: <your subdomain>.example.com{% if nuki.dns_type == 'single_dns' %}
+      - Leave blank for root dns records > {% elif nuki.dns_type == 'cloudflare_dns' %}
+      - If georouted and left blank, will fallback on `namespace` variable
+        which defaults to polkadot per the convention:
+        <region>.aws.<mainnet/kusama>.<namespace>.example.com
+        If supplied will go to <subdomain>.example.com but needs additional
+        consideration for zoning > {% endif %}
 
 vars_confirm_:
   type: confirm
