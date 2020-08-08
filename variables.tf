@@ -4,12 +4,6 @@ variable "cloudflare_enable" {
   default     = false
 }
 
-//variable "acm_enable" {
-//  description = "Create ACM SSL"
-//  type        = bool
-//  default     = false
-//}
-
 ########
 # Label
 ########
@@ -25,23 +19,11 @@ variable "tags" {
   default     = {}
 }
 
-//variable "environment" {
-//  description = "The environment"
-//  type        = string
-//  default     = "test"
-//}
-
 variable "namespace" {
   description = "The namespace to deploy into"
   type        = string
   default     = "polkadot"
 }
-
-//variable "stage" {
-//  description = "The stage of the deployment"
-//  type        = string
-//  default     = "test"
-//}
 
 variable "network_name" {
   description = "The network name, ie kusama / mainnet"
@@ -49,26 +31,15 @@ variable "network_name" {
   default     = "kusama"
 }
 
-//variable "owner" {
-//  type    = string
-//  default = ""
-//}
-
 ######
 # DNS
 ######
 
 variable "subdomain" {
-  description = ""
+  description = "The subdomain"
   type        = string
   default     = ""
 }
-
-//variable "fqdn" {
-//  description = ""
-//  type = string
-////  default = ""
-//}
 
 variable "internal_tld" {
   description = "The top level domain for the internal DNS"

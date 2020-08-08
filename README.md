@@ -62,7 +62,7 @@ No issue is creating limit on this module.
 | root\_domain\_name | The public domain | `string` | `""` | no |
 | sentry\_enabled | Boolean to allow vault related traffic | `bool` | `false` | no |
 | sentry\_sg\_name | Name for the public node security group | `string` | `"sentry-sg"` | no |
-| subdomain | n/a | `string` | `""` | no |
+| subdomain | The subdomain | `string` | `""` | no |
 | tags | The tags of the deployment | `map(string)` | `{}` | no |
 | vault\_enabled | Boolean to allow vault related traffic | `bool` | `false` | no |
 | vault\_sg\_name | Name for the vault security group | `string` | `"vault-sg"` | no |
