@@ -30,13 +30,16 @@ resource "cloudflare_record" "public_delegation" {
 
 
 resource "aws_route53_zone" "this" {
-  count = var.root_domain_name == "" ? 0 : 1
-  name  = "${local.public_root}."
+  count         = var.root_domain_name == "" ? 0 : 1
+  name          = "${local.public_root}."
+  force_destroy = true
 }
 
 resource "aws_route53_zone" "root_private" {
   count = local.create_internal_domain ? 1 : 0
   name  = "${var.namespace}.${var.internal_tld}."
+
+  force_destroy = true
 
   dynamic "vpc" {
     for_each = local.vpc_ids
@@ -52,7 +55,8 @@ resource "aws_route53_zone" "root_private" {
 resource "aws_route53_zone" "region_public" {
   count = local.create_public_regional_subdomain ? 1 : 0
 
-  name = local.public_domain
+  name          = local.public_domain
+  force_destroy = true
 
   tags = merge(var.tags, { "Region" = data.aws_region.current.name, "ZoneType" = "PublicRegion" })
 }
