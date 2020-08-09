@@ -36,6 +36,8 @@ No issue is creating limit on this module.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:-----:|
 | all\_enabled | Bool to enable all the security groups | `bool` | `false` | no |
+| api\_enabled | Boolean to allow api related traffic | `bool` | `false` | no |
+| api\_sg\_name | Name for the api security group | `string` | `"api-sg"` | no |
 | azs | List of availability zones | `list(string)` | `[]` | no |
 | bastion\_enabled | Boolean to enable a bastion host.  All ssh traffic restricted to bastion | `bool` | `false` | no |
 | bastion\_sg\_name | Name for the bastion security group | `string` | `"bastion-sg"` | no |
@@ -49,7 +51,7 @@ No issue is creating limit on this module.
 | hids\_enabled | Boolean to enable intrusion detection systems traffic | `bool` | `false` | no |
 | hids\_sg\_name | Name for the HIDS security group | `string` | `"hids-sg"` | no |
 | internal\_tld | The top level domain for the internal DNS | `string` | `"internal"` | no |
-| k8s\_enabled | Boolean to allow vault related traffic | `bool` | `false` | no |
+| k8s\_enabled | Boolean to enable kubernetes | `bool` | `false` | no |
 | k8s\_sg\_name | Name for the consult security group | `string` | `"k8s-sg"` | no |
 | logging\_enabled | Boolean to allow logging related traffic | `bool` | `false` | no |
 | logging\_sg\_name | Name for the logging security group | `string` | `"logging-sg"` | no |
@@ -60,12 +62,10 @@ No issue is creating limit on this module.
 | network\_name | The network name, ie kusama / mainnet | `string` | `"kusama"` | no |
 | num\_azs | The number of AZs to deploy into | `number` | `0` | no |
 | root\_domain\_name | The public domain | `string` | `""` | no |
-| sentry\_enabled | Boolean to allow vault related traffic | `bool` | `false` | no |
+| sentry\_enabled | Boolean to allow sentry related traffic | `bool` | `false` | no |
 | sentry\_sg\_name | Name for the public node security group | `string` | `"sentry-sg"` | no |
 | subdomain | The subdomain | `string` | `""` | no |
 | tags | The tags of the deployment | `map(string)` | `{}` | no |
-| vault\_enabled | Boolean to allow vault related traffic | `bool` | `false` | no |
-| vault\_sg\_name | Name for the vault security group | `string` | `"vault-sg"` | no |
 | vpc\_name | The name of the VPC | `string` | `""` | no |
 | zone\_id | The zone ID to configure as the root zoon - ie subdomain.example.com's zone ID | `string` | `""` | no |
 
@@ -73,6 +73,7 @@ No issue is creating limit on this module.
 
 | Name | Description |
 |------|-------------|
+| api\_security\_group\_id | n/a |
 | azs | n/a |
 | bastion\_security\_group\_id | #### SGs #### |
 | consul\_security\_group\_id | n/a |
@@ -88,7 +89,6 @@ No issue is creating limit on this module.
 | public\_subnets | n/a |
 | root\_domain\_name | #### DNS #### |
 | sentry\_security\_group\_id | n/a |
-| vault\_security\_group\_id | n/a |
 | vpc\_id | #### VPC #### |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

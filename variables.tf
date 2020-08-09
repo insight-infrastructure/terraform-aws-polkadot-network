@@ -138,7 +138,7 @@ variable "hids_enabled" {
 }
 
 variable "k8s_enabled" {
-  description = "Boolean to allow vault related traffic"
+  description = "Boolean to enable kubernetes"
   type        = bool
   default     = false
 }
@@ -156,13 +156,13 @@ variable "monitoring_enabled" {
 }
 
 variable "sentry_enabled" {
-  description = "Boolean to allow vault related traffic"
+  description = "Boolean to allow sentry related traffic"
   type        = bool
   default     = false
 }
 
-variable "vault_enabled" {
-  description = "Boolean to allow vault related traffic"
+variable "api_enabled" {
+  description = "Boolean to allow api related traffic"
   type        = bool
   default     = false
 }
@@ -209,8 +209,8 @@ variable "logging_sg_name" {
   default     = "logging-sg"
 }
 
-variable "vault_sg_name" {
-  description = "Name for the vault security group"
+variable "api_sg_name" {
+  description = "Name for the api security group"
   type        = string
-  default     = "vault-sg"
+  default     = "api-sg"
 }

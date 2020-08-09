@@ -10,7 +10,7 @@ locals {
   logging_enabled    = var.all_enabled ? true : var.logging_enabled
   monitoring_enabled = var.all_enabled ? true : var.monitoring_enabled
   sentry_enabled     = var.all_enabled ? true : var.sentry_enabled
-  vault_enabled      = var.all_enabled ? true : var.vault_enabled
+  api_enabled        = var.all_enabled ? true : var.api_enabled
 
   //  acm_enable = var.all_enabled ? true : var.acm_enable
 
