@@ -4,6 +4,12 @@ variable "cloudflare_enable" {
   default     = false
 }
 
+variable "id" {
+  description = "A unique identifier for the deployment"
+  type        = string
+  default     = ""
+}
+
 ########
 # Label
 ########
