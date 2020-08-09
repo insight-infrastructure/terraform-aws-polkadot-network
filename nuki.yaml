@@ -32,6 +32,26 @@ dns_type_:
     - single_dns: Single region single domain
     - cloudflare_dns: Cloudflare based multi-region georouted
 
+api_enable:
+  type: stat
+  input: true
+
+consul_enable:
+  type: stat
+  input: true
+
+k8s_enable:
+  type: stat
+  input: true
+
+monitoring_enable:
+  type: stat
+  input: true
+
+_enable:
+  type: stat
+  input: true
+
 cloudflare_enable:
   type: stat
   input: true
