@@ -16,6 +16,7 @@ module "network" {
   source           = "../.."
   all_enabled      = true
   root_domain_name = var.root_domain_name
+  namespace        = "test"
 }
 
 output "k8s_sg_id" {
