@@ -48,6 +48,10 @@ output "api_security_group_id" {
   value = module.api_node_sg.this_security_group_id
 }
 
+output "validator_security_group_id" {
+  value = module.validator_sg.this_security_group_id
+}
+
 #####
 # VPC
 #####

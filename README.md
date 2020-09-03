@@ -115,6 +115,7 @@ No issue is creating limit on this module.
 | public\_subnets | n/a |
 | root\_domain\_name | #### DNS #### |
 | sentry\_security\_group\_id | n/a |
+| validator\_security\_group\_id | n/a |
 | vpc\_id | #### VPC #### |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
