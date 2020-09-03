@@ -1,4 +1,4 @@
-module "sentry_node_sg" {
+module "validator_sg" {
   source      = "github.com/terraform-aws-modules/terraform-aws-security-group.git?ref=v3.2.0"
   name        = var.validator_sg_name
   description = "All traffic"
