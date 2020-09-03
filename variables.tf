@@ -173,6 +173,12 @@ variable "api_enabled" {
   default     = false
 }
 
+variable "validator_enabled" {
+  description = "Boolean to allow validator related traffic"
+  type        = bool
+  default     = false
+}
+
 variable "sentry_sg_name" {
   description = "Name for the public node security group"
   type        = string
@@ -219,4 +225,10 @@ variable "api_sg_name" {
   description = "Name for the api security group"
   type        = string
   default     = "api-sg"
+}
+
+variable "validator_sg_name" {
+  description = "Name for the validator security group"
+  type        = string
+  default     = "validator-sg"
 }

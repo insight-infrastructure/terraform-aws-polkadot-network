@@ -11,6 +11,7 @@ locals {
   monitoring_enabled = var.all_enabled ? true : var.monitoring_enabled
   sentry_enabled     = var.all_enabled ? true : var.sentry_enabled
   api_enabled        = var.all_enabled ? true : var.api_enabled
+  validator_enabled  = var.all_enabled ? true : var.validator_enabled
 
   //  acm_enable = var.all_enabled ? true : var.acm_enable
 
