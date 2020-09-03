@@ -24,6 +24,12 @@ module "this" {
 No issue is creating limit on this module.
 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+## Requirements
+
+| Name | Version |
+|------|---------|
+| terraform | >= 0.12 |
+
 ## Providers
 
 | Name | Version |
@@ -35,7 +41,7 @@ No issue is creating limit on this module.
 ## Inputs
 
 | Name | Description | Type | Default | Required |
-|------|-------------|------|---------|:-----:|
+|------|-------------|------|---------|:--------:|
 | all\_enabled | Bool to enable all the security groups | `bool` | `false` | no |
 | allow\_ssh\_commands | Allows the SSH user to execute one-off commands. Pass 'True' to enable. Warning: These commands are not logged and increase the vulnerability of the system. Use at your own discretion. | `string` | `""` | no |
 | api\_enabled | Boolean to allow api related traffic | `bool` | `false` | no |
@@ -84,6 +90,8 @@ No issue is creating limit on this module.
 | sentry\_sg\_name | Name for the public node security group | `string` | `"sentry-sg"` | no |
 | subdomain | The subdomain | `string` | `""` | no |
 | tags | The tags of the deployment | `map(string)` | `{}` | no |
+| validator\_enabled | Boolean to allow validator related traffic | `bool` | `false` | no |
+| validator\_sg\_name | Name for the validator security group | `string` | `"validator-sg"` | no |
 | vpc\_name | The name of the VPC | `string` | `""` | no |
 | zone\_id | The zone ID to configure as the root zoon - ie subdomain.example.com's zone ID | `string` | `""` | no |
 
