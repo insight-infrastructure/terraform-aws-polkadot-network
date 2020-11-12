@@ -40,10 +40,6 @@ output "monitoring_security_group_id" {
   value = module.monitoring_sg.this_security_group_id
 }
 
-output "sentry_security_group_id" {
-  value = module.sentry_node_sg.this_security_group_id
-}
-
 output "api_security_group_id" {
   value = module.api_node_sg.this_security_group_id
 }
