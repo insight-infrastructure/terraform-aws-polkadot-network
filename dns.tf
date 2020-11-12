@@ -17,26 +17,52 @@ data cloudflare_zones "this" {
     name = var.root_domain_name
   }
 }
-
+//
 resource "cloudflare_record" "public_delegation" {
   count = local.cloudflare_enable ? 4 : 0
 
-  //  name    = "aws.${var.network_name}.${var.root_domain_name}."
-  name    = local.public_root
-  value   = flatten(aws_route53_zone.this.*.name_servers)[count.index]
+  name    = local.public_domain
+  value   = flatten(aws_route53_zone.region_public[0].name_servers)[count.index]
   type    = "NS"
   zone_id = data.cloudflare_zones.this.*.zones[0][0].id
 }
 
+//resource "aws_route53_zone" "this" {
+//  count         = var.root_domain_name == "" ? 0 : 1
+//  name          = "${local.public_root}."
+//  force_destroy = true
+//}
 
-resource "aws_route53_zone" "this" {
-  count         = var.root_domain_name == "" ? 0 : 1
-  name          = "${local.public_root}."
+resource "aws_route53_zone" "region_public" {
+  //  count = local.create_public_regional_subdomain ? 1 : 0
+  count = 1
+
+  name          = "${local.public_domain}."
   force_destroy = true
+
+  tags = merge(var.tags, { "Region" = data.aws_region.current.name, "ZoneType" = "PublicRegion" })
 }
 
+//resource "aws_route53_record" "region_public" {
+//  count = local.create_public_regional_subdomain ? 1 : 0
+//
+//  zone_id = var.zone_id == "" ? join("", aws_route53_zone.this.*.id) : var.zone_id
+//
+//  name = local.public_domain
+//  type = "NS"
+//  ttl  = "30"
+//
+//  records = [
+//    aws_route53_zone.region_public.*.name_servers.0[count.index],
+//    aws_route53_zone.region_public.*.name_servers.1[count.index],
+//    aws_route53_zone.region_public.*.name_servers.2[count.index],
+//    aws_route53_zone.region_public.*.name_servers.3[count.index],
+//  ]
+//}
+
 resource "aws_route53_zone" "root_private" {
-  count = local.create_internal_domain ? 1 : 0
+  //  count = local.create_internal_domain ? 1 : 0
+  count = var.root_domain_name == "" ? 0 : 1
   name  = "${var.namespace}.${var.internal_tld}."
 
   force_destroy = true
@@ -50,30 +76,4 @@ resource "aws_route53_zone" "root_private" {
   }
 
   tags = merge(var.tags, { "Region" = data.aws_region.current.name, "ZoneType" = "Private" })
-}
-
-resource "aws_route53_zone" "region_public" {
-  count = local.create_public_regional_subdomain ? 1 : 0
-
-  name          = local.public_domain
-  force_destroy = true
-
-  tags = merge(var.tags, { "Region" = data.aws_region.current.name, "ZoneType" = "PublicRegion" })
-}
-
-resource "aws_route53_record" "region_public" {
-  count = local.create_public_regional_subdomain ? 1 : 0
-
-  zone_id = var.zone_id == "" ? join("", aws_route53_zone.this.*.id) : var.zone_id
-
-  name = local.public_domain
-  type = "NS"
-  ttl  = "30"
-
-  records = [
-    aws_route53_zone.region_public.*.name_servers.0[count.index],
-    aws_route53_zone.region_public.*.name_servers.1[count.index],
-    aws_route53_zone.region_public.*.name_servers.2[count.index],
-    aws_route53_zone.region_public.*.name_servers.3[count.index],
-  ]
 }
