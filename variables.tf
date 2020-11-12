@@ -161,12 +161,6 @@ variable "monitoring_enabled" {
   default     = false
 }
 
-variable "sentry_enabled" {
-  description = "Boolean to allow sentry related traffic"
-  type        = bool
-  default     = false
-}
-
 variable "api_enabled" {
   description = "Boolean to allow api related traffic"
   type        = bool
@@ -177,12 +171,6 @@ variable "validator_enabled" {
   description = "Boolean to allow validator related traffic"
   type        = bool
   default     = false
-}
-
-variable "sentry_sg_name" {
-  description = "Name for the public node security group"
-  type        = string
-  default     = "sentry-sg"
 }
 
 variable "bastion_sg_name" {
@@ -231,4 +219,19 @@ variable "validator_sg_name" {
   description = "Name for the validator security group"
   type        = string
   default     = "validator-sg"
+}
+
+variable "polkadot_network_settings" {
+  description = "Map of port settings for one or more polkadot networks"
+  type        = map(map(string))
+  default = {
+    polkadot = {
+      name                = "polkadot"
+      shortname           = "polkadot"
+      api_health          = "5500"
+      polkadot_prometheus = "9610"
+      json_rpc            = "9933"
+      ws_rpc              = "9944"
+    }
+  }
 }

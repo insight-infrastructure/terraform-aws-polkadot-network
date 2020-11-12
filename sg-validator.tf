@@ -14,28 +14,31 @@ module "validator_sg" {
     {
       rule                     = "ssh-tcp"
       source_security_group_id = module.bastion_sg.this_security_group_id
-    }] : [], local.monitoring_enabled ? [
-    {
-      from_port                = 9100
-      to_port                  = 9100
-      protocol                 = "tcp"
-      description              = "Node exporter"
-      source_security_group_id = module.monitoring_sg.this_security_group_id
-    },
-    {
-      from_port                = 9610
-      to_port                  = 9610
-      protocol                 = "tcp"
-      description              = "Client exporter"
-      source_security_group_id = module.monitoring_sg.this_security_group_id
-    },
-    {
-      from_port                = 9323
-      to_port                  = 9323
-      protocol                 = "tcp"
-      description              = "Docker Prometheus Metrics under /metrics endpoint"
-      source_security_group_id = module.monitoring_sg.this_security_group_id
-    }] : [], local.hids_enabled ? [
+      }] : [], local.monitoring_enabled ? concat([
+      # static rules
+      {
+        from_port                = 9100
+        to_port                  = 9100
+        protocol                 = "tcp"
+        description              = "Node exporter"
+        source_security_group_id = module.monitoring_sg.this_security_group_id
+      },
+      {
+        from_port                = 9323
+        to_port                  = 9323
+        protocol                 = "tcp"
+        description              = "Docker Prometheus Metrics under /metrics endpoint"
+        source_security_group_id = module.monitoring_sg.this_security_group_id
+      }], [
+      # dynamic rules based on Polkadot network
+      for network in var.polkadot_network_settings : {
+        from_port                = network["polkadot_prometheus"]
+        to_port                  = network["polkadot_prometheus"]
+        protocol                 = "tcp"
+        description              = "Client exporter - ${network["name"]}"
+        source_security_group_id = module.monitoring_sg.this_security_group_id
+      }
+    ]) : [], local.hids_enabled ? [
     {
       from_port                = 1514
       to_port                  = 1515
@@ -56,43 +59,49 @@ module "validator_sg" {
   "consul-dns-udp"] : []
 
   ingress_with_cidr_blocks = concat(
-    [
-      {
-        from_port   = 30333
-        to_port     = 30333
-        protocol    = "tcp"
-        description = ""
-        cidr_blocks = "0.0.0.0/0"
-      },
-      {
-        from_port   = 51820
-        to_port     = 51820
-        protocol    = "udp"
-        description = ""
-        cidr_blocks = "0.0.0.0/0"
-      },
-      {
-        from_port   = 5500
-        to_port     = 5500
-        protocol    = "tcp"
-        description = ""
-        cidr_blocks = "0.0.0.0/0"
-      },
-      {
-        from_port   = 9933
-        to_port     = 9933
-        protocol    = "tcp"
-        description = ""
-        cidr_blocks = "0.0.0.0/0"
-      },
-      {
-        from_port   = 9944
-        to_port     = 9944
-        protocol    = "tcp"
-        description = ""
-        cidr_blocks = "0.0.0.0/0"
-      },
-    ], local.bastion_enabled ? [] :
+    concat(
+      # static rules
+      [
+        {
+          from_port   = 30333
+          to_port     = 30333
+          protocol    = "tcp"
+          description = ""
+          cidr_blocks = "0.0.0.0/0"
+        },
+        {
+          from_port   = 51820
+          to_port     = 51820
+          protocol    = "udp"
+          description = ""
+          cidr_blocks = "0.0.0.0/0"
+        },
+        ], [
+        # dynamic rules based on Polkadot network
+        for network in var.polkadot_network_settings : {
+          from_port   = network["api_health"]
+          to_port     = network["api_health"]
+          protocol    = "tcp"
+          description = "Health Check - ${network["name"]}"
+          cidr_blocks = "0.0.0.0/0"
+      }],
+      [
+        for network in var.polkadot_network_settings : {
+          from_port   = network["json_rpc"]
+          to_port     = network["json_rpc"]
+          protocol    = "tcp"
+          description = "JSON RPC - ${network["name"]}"
+          cidr_blocks = "0.0.0.0/0"
+      }],
+      [
+        for network in var.polkadot_network_settings : {
+          from_port   = network["ws_rpc"]
+          to_port     = network["ws_rpc"]
+          protocol    = "tcp"
+          description = "WS RPC - ${network["name"]}"
+          cidr_blocks = "0.0.0.0/0"
+      }],
+    ), local.bastion_enabled ? [] :
     [
       {
         from_port   = 22
