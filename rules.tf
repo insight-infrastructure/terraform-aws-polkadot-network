@@ -9,7 +9,6 @@ locals {
   k8s_enabled        = var.all_enabled ? true : var.k8s_enabled
   logging_enabled    = var.all_enabled ? true : var.logging_enabled
   monitoring_enabled = var.all_enabled ? true : var.monitoring_enabled
-  sentry_enabled     = var.all_enabled ? true : var.sentry_enabled
   api_enabled        = var.all_enabled ? true : var.api_enabled
   validator_enabled  = var.all_enabled ? true : var.validator_enabled
 
