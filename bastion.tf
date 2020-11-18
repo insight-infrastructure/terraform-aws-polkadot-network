@@ -136,7 +136,7 @@ resource "aws_s3_bucket" "bucket" {
   count = var.create_bastion && var.bastion_enabled ? 1 : 0
 
   bucket = local.bucket_name
-  acl    = "bucket-owner-full-control"
+  acl    = "private"
 
   server_side_encryption_configuration {
     rule {
