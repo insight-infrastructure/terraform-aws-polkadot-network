@@ -122,21 +122,21 @@ data "template_file" "user_data" {
 }
 
 resource "aws_kms_key" "key" {
-  count = var.create_bastion && var.bastion_enabled ? 1 : 0
+  count = var.create_bastion && local.bastion_enabled ? 1 : 0
   tags  = merge(var.tags)
 }
 
 resource "aws_kms_alias" "alias" {
-  count         = var.create_bastion && var.bastion_enabled ? 1 : 0
+  count         = var.create_bastion && local.bastion_enabled ? 1 : 0
   name          = "alias/${local.bucket_name}"
   target_key_id = join("", aws_kms_key.key.*.arn)
 }
 
 resource "aws_s3_bucket" "bucket" {
-  count = var.create_bastion && var.bastion_enabled ? 1 : 0
+  count = var.create_bastion && local.bastion_enabled ? 1 : 0
 
   bucket = local.bucket_name
-  acl    = "bucket-owner-full-control"
+  acl    = "private"
 
   server_side_encryption_configuration {
     rule {
@@ -184,7 +184,7 @@ resource "aws_s3_bucket" "bucket" {
 }
 
 resource "aws_s3_bucket_object" "keys_readme" {
-  count = var.create_bastion && var.bastion_enabled ? 1 : 0
+  count = var.create_bastion && local.bastion_enabled ? 1 : 0
 
   bucket     = join("", aws_s3_bucket.bucket.*.id)
   key        = "public-keys/README.txt"
@@ -193,7 +193,7 @@ resource "aws_s3_bucket_object" "keys_readme" {
 }
 
 resource "aws_s3_bucket_object" "keys_uploads" {
-  count = var.create_bastion && var.bastion_enabled ? length(var.public_key_paths) : 0
+  count = var.create_bastion && local.bastion_enabled ? length(var.public_key_paths) : 0
 
   bucket     = join("", aws_s3_bucket.bucket.*.id)
   key        = "public-keys/${basename(var.public_key_paths[count.index])}"
@@ -214,7 +214,7 @@ data "aws_iam_policy_document" "assume_policy_document" {
 }
 
 resource "aws_iam_role" "bastion_host_role" {
-  count = var.create_bastion && var.bastion_enabled ? 1 : 0
+  count = var.create_bastion && local.bastion_enabled ? 1 : 0
 
   path               = "/"
   assume_role_policy = data.aws_iam_policy_document.assume_policy_document.json
@@ -262,14 +262,14 @@ data "aws_iam_policy_document" "bastion_host_policy_document" {
 }
 
 resource "aws_iam_policy" "bastion_host_policy" {
-  count = var.create_bastion && var.bastion_enabled ? 1 : 0
+  count = var.create_bastion && local.bastion_enabled ? 1 : 0
 
   name   = "BastionHostS3Read${replace(title(replace(var.id, "-", " ")), " ", "")}Policy"
   policy = data.aws_iam_policy_document.bastion_host_policy_document.json
 }
 
 resource "aws_iam_role_policy_attachment" "bastion_host" {
-  count = var.create_bastion && var.bastion_enabled ? 1 : 0
+  count = var.create_bastion && local.bastion_enabled ? 1 : 0
 
   policy_arn = join("", aws_iam_policy.bastion_host_policy.*.arn)
   role       = join("", aws_iam_role.bastion_host_role.*.name)
@@ -280,7 +280,7 @@ locals {
 }
 
 resource "aws_route53_record" "bastion_record_name" {
-  count = var.domain_name != "" && var.create_bastion && var.bastion_enabled ? 1 : 0
+  count = var.domain_name != "" && var.create_bastion && local.bastion_enabled ? 1 : 0
 
   name    = local.bastion_dns_record
   zone_id = join("", aws_route53_zone.region_public.*.id)
@@ -290,7 +290,7 @@ resource "aws_route53_record" "bastion_record_name" {
 }
 
 resource "aws_eip" "bastion" {
-  count = var.create_bastion && var.bastion_enabled ? 1 : 0
+  count = var.create_bastion && local.bastion_enabled ? 1 : 0
   tags  = var.tags
 }
 
@@ -306,15 +306,14 @@ resource "aws_key_pair" "bastion" {
 }
 
 resource "aws_instance" "this" {
-  count = var.create_bastion && var.bastion_enabled ? 1 : 0
+  count = var.create_bastion && local.bastion_enabled ? 1 : 0
 
   ami                    = module.ami.ubuntu_2004_ami_id
   instance_type          = var.bastion_instance_type
   user_data              = data.template_file.user_data.rendered
   subnet_id              = module.vpc.public_subnets[0]
-  vpc_security_group_ids = [join("", module.bastion_sg.this_security_group_id)]
+  vpc_security_group_ids = module.bastion_sg.*.this_security_group_id
   monitoring             = var.bastion_monitoring_enabled
 
   tags = merge({ name = "bastion" }, var.tags)
 }
-
