@@ -83,11 +83,10 @@ No issue is creating limit on this module.
 | namespace | The namespace to deploy into | `string` | `"polkadot"` | no |
 | network\_name | The network name, ie kusama / mainnet | `string` | `"kusama"` | no |
 | num\_azs | The number of AZs to deploy into | `number` | `0` | no |
+| polkadot\_network\_settings | Map of port settings for one or more polkadot networks | `map(map(string))` | <pre>{<br>  "polkadot": {<br>    "api_health": "5500",<br>    "json_rpc": "9933",<br>    "name": "polkadot",<br>    "polkadot_prometheus": "9610",<br>    "shortname": "polkadot",<br>    "ws_rpc": "9944"<br>  }<br>}</pre> | no |
 | public\_key\_paths | List of paths to public ssh keys | `list(string)` | `[]` | no |
 | public\_ssh\_port | Set the SSH port to use from desktop to the bastion | `number` | `22` | no |
 | root\_domain\_name | The public domain | `string` | `""` | no |
-| sentry\_enabled | Boolean to allow sentry related traffic | `bool` | `false` | no |
-| sentry\_sg\_name | Name for the public node security group | `string` | `"sentry-sg"` | no |
 | subdomain | The subdomain | `string` | `""` | no |
 | tags | The tags of the deployment | `map(string)` | `{}` | no |
 | validator\_enabled | Boolean to allow validator related traffic | `bool` | `false` | no |
@@ -114,7 +113,6 @@ No issue is creating limit on this module.
 | public\_subnet\_cidr\_blocks | n/a |
 | public\_subnets | n/a |
 | root\_domain\_name | #### DNS #### |
-| sentry\_security\_group\_id | n/a |
 | validator\_security\_group\_id | n/a |
 | vpc\_id | #### VPC #### |
 
