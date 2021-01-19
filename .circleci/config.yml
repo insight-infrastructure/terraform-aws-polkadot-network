@@ -29,8 +29,8 @@ jobs:
       - run:
           name: Install Terraform 14
           command: |
-            wget --quiet https://releases.hashicorp.com/terraform/0.14.6/terraform_0.14.6_linux_amd64.zip
-            sudo unzip -o terraform_0.14.6_linux_amd64.zip -d /usr/local/bin
+            wget --quiet https://releases.hashicorp.com/terraform/0.14.4/terraform_0.14.4_linux_amd64.zip
+            sudo unzip -o terraform_0.14.4_linux_amd64.zip -d /usr/local/bin
       - run:
           name: TF 14 Integration test
           command: go test ~/project/test -v -timeout 45m
