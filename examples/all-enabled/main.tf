@@ -6,9 +6,9 @@ provider "aws" {
   region = var.aws_region
 }
 
-provider "cloudflare" {
-  version = "~> 2.0"
-}
+//provider "cloudflare" {
+//  version = "~> 2.0"
+//}
 
 data "aws_caller_identity" "this" {}
 

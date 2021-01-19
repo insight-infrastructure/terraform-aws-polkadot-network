@@ -35,7 +35,6 @@ jobs:
           name: TF 14 Integration test
           command: go test ~/project/test -v -timeout 45m
           no_output_timeout: 45m
-      - go/test
 
 orbs:
   go: circleci/go@0.2.0
